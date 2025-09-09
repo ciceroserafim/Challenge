@@ -1,54 +1,60 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Switch, TouchableOpacity } from 'react-native';
+import { useTheme } from './ThemeContext';
 
 export default function Configuracao({ navigation }) {
+  const theme = useTheme();
   const [notificacoesAtivadas, setNotificacoesAtivadas] = useState(true);
-  const [modoEscuroAtivado, setModoEscuroAtivado] = useState(false);
 
   const toggleNotificacoes = () => {
-    setNotificacoesAtivadas(previousState => !previousState);
-    // Adicione lógica para salvar a preferência do usuário
+    setNotificacoesAtivadas(prev => !prev);
     console.log('Notificações:', !notificacoesAtivadas ? 'Ativadas' : 'Desativadas');
   };
 
-  const toggleModoEscuro = () => {
-    setModoEscuroAtivado(previousState => !previousState);
-    // Adicione lógica para aplicar o modo escuro globalmente
-    console.log('Modo Escuro:', !modoEscuroAtivado ? 'Ativado' : 'Desativado');
-  };
-
   const handleSair = () => {
-    // Lógica para deslogar o usuário
     console.log('Usuário deslogado!');
-    // Exemplo: navegar de volta para a tela de Login ou Primeira
     navigation.navigate('Login');
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Configurações</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.title, { color: theme.colors.text }]}>Configurações</Text>
 
-      <View style={styles.optionRow}>
-        <Text style={styles.optionText}>Receber Notificações</Text>
+      {/* Notificações */}
+      <View style={[styles.optionRow, { backgroundColor: theme.colors.card }]}>
+        <Text style={[styles.optionText, { color: theme.colors.text }]}>Receber Notificações</Text>
         <Switch
           onValueChange={toggleNotificacoes}
           value={notificacoesAtivadas}
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={notificacoesAtivadas ? "#f5dd4b" : "#f4f3f4"}
+          trackColor={{ false: "#767577", true: "#e4ccccff" }}
+          thumbColor={notificacoesAtivadas ? "#dd495dff" : "#f4f3f4"}
         />
       </View>
 
-      <View style={styles.optionRow}>
-        <Text style={styles.optionText}>Modo Escuro</Text>
+      {/* Modo Escuro */}
+      <View style={[styles.optionRow, { backgroundColor: theme.colors.card }]}>
+        <Text style={[styles.optionText, { color: theme.colors.text }]}>Modo Escuro</Text>
         <Switch
-          onValueChange={toggleModoEscuro}
-          value={modoEscuroAtivado}
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={modoEscuroAtivado ? "#f5dd4b" : "#f4f3f4"}
+          onValueChange={theme.toggleModoEscuro}
+          value={theme.modoEscuro}
+          trackColor={{ false: "#60a8b4ff", true: theme.colors.switchTrack }}
+          thumbColor={theme.modoEscuro ? theme.colors.switchThumb : "#d1cd90ff"}
         />
       </View>
 
-      <TouchableOpacity style={styles.logoutButton} onPress={handleSair}>
+      {/* Modo Mottu */}
+      <View style={[styles.optionRow, { backgroundColor: theme.colors.card }]}>
+        <Text style={[styles.optionText, { color: theme.colors.text }]}>Modo Mottu</Text>
+        <Switch
+          onValueChange={theme.toggleModoMottu}
+          value={theme.modoMottu}
+          trackColor={{ false: "#86c95aff", true: theme.colors.switchTrack }}
+          thumbColor={theme.modoMottu ? theme.colors.switchThumb : "#f4f3f4"}
+        />
+      </View>
+
+      {/* Botão Sair */}
+      <TouchableOpacity style={[styles.logoutButton, { backgroundColor: theme.colors.logoutButton }]} onPress={handleSair}>
         <Text style={styles.logoutButtonText}>Sair</Text>
       </TouchableOpacity>
     </View>
@@ -59,20 +65,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f0f4f8',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 30,
     textAlign: 'center',
-    color: '#2c3e50',
   },
   optionRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
     padding: 15,
     borderRadius: 8,
     marginBottom: 15,
@@ -84,10 +87,8 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 18,
-    color: '#34495e',
   },
   logoutButton: {
-    backgroundColor: '#e74c3c', // Vermelho para o botão de sair
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 8,

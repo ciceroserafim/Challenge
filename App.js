@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Button, StyleSheet, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import { ThemeProvider} from './ThemeContext';
 
 import Primeira from './primeira';
 import Login from './login';
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
 
 export default function App() {
   return (
+    <ThemeProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Primeira"> 
         <Stack.Screen name="Escolha" component={Escolha} />
@@ -61,8 +62,10 @@ export default function App() {
         <Stack.Screen name="Configuracao" component={Configuracao} />
          <Stack.Screen name="Desenvolvedores" component={Desenvolvedores} />
          <Stack.Screen name="Cadastro" component={Cadastro} />
+         
 
       </Stack.Navigator>
     </NavigationContainer>
+    </ThemeProvider>
   );
 }

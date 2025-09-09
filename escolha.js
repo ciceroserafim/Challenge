@@ -8,7 +8,7 @@ export default function Escolha({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}> 🏍️  Escolha uma Opção 🏍️ </Text>
+      <Text style={styles.title}>   Escolha uma Opção  </Text>
       <Text style={styles.subtitle}>Navegue pelas seções do aplicativo</Text>
 
       <TouchableOpacity style={styles.button} onPress={() => navigateTo('Patio')}>

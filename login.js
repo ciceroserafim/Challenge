@@ -3,12 +3,13 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
+import { useTheme } from './ThemeContext';
 
 export default function Login({ navigation }) {
+  const theme = useTheme();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,31 +19,39 @@ export default function Login({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+    <View style={[styles.container, { backgroundColor: theme.colors.card }]}>
+      <Text style={[styles.title, { color: theme.colors.text }]}>Login</Text>
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, { borderColor: theme.colors.text, color: theme.colors.text, backgroundColor: theme.modoEscuro ? '#333' : '#fff' }]}
         placeholder="Usuário"
+        placeholderTextColor={theme.colors.text}
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
-        style={styles.input}
+        style={[styles.input, { borderColor: theme.colors.text, color: theme.colors.text, backgroundColor: theme.modoEscuro ? '#333' : '#fff' }]}
         placeholder="Senha"
         secureTextEntry
+        placeholderTextColor={theme.colors.text}
         value={password}
         onChangeText={setPassword}
       />
 
-      <Button title="Entrar" onPress={handleLogin} />
+      
+      <TouchableOpacity 
+        style={[styles.button, { backgroundColor: theme.modoEscuro ? '#228b22' : '#228b22' }]} 
+        onPress={handleLogin}
+      >
+        <Text style={styles.buttonText}>Entrar</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity onPress={() => alert('EsqueceuSenha')}>
-        <Text style={styles.link}>Esqueceu a senha?</Text>
+        <Text style={[styles.link, { color: theme.colors.text }]}>Esqueceu a senha?</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
-        <Text style={styles.link}>Não tem cadastro? Cadastre-se aqui</Text>
+        <Text style={[styles.link, { color: theme.colors.text }]}>Não tem cadastro? Cadastre-se aqui</Text>
       </TouchableOpacity>
     </View>
   );
@@ -53,7 +62,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
-    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
@@ -63,16 +71,26 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 15,
     paddingHorizontal: 10,
     borderRadius: 5,
   },
   link: {
-    color: '#007BFF',
     textAlign: 'center',
     marginTop: 15,
     textDecorationLine: 'underline',
+  },
+  button: {
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+    elevation: 3,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });

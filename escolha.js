@@ -1,15 +1,21 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useTheme } from './ThemeContext';
 
 export default function Escolha({ navigation }) {
+  const theme = useTheme();
   const navigateTo = (screenName) => {
     navigation.navigate(screenName);
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: theme.modoEscuro ? '#333' : '#fff' }]} // Cor do fundo da tela
+    >
       <Text style={styles.title}>   Escolha uma Opção  </Text>
       <Text style={styles.subtitle}>Navegue pelas seções do aplicativo</Text>
+
+  
 
       <TouchableOpacity style={styles.button} onPress={() => navigateTo('Patio')}>
         <Text style={styles.buttonText}>📍 Ir para Pátio</Text>
@@ -36,37 +42,40 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#E8F5E9',
+    backgroundColor: '#fff',
   },
   title: {
-    fontSize: 30,
+    fontSize: 35,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 16,
     textAlign: 'center',
     color: '#2E7D32', 
+    shadowColor: '#000',
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 23,
     textAlign: 'center',
     marginBottom: 30,
     color: '#4CAF50',
   },
   button: {
     backgroundColor: '#A5D6A7', 
-    paddingHorizontal: 30,
-    borderRadius: 20,
-    marginVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginVertical: 13,
     width: '85%',
+    height: 40,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 4,
-  },
+    textAlign: 'center', 
+    },
   buttonText: {
     color: '#1B5E20',
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
   },
 });

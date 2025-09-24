@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Switch, TouchableOpacity } from 'react-native';
-import { useTheme } from './ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Configuracao({ navigation }) {
   const theme = useTheme();

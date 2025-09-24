@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
-import { useTheme } from './ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Login({ navigation }) {
   const theme = useTheme();

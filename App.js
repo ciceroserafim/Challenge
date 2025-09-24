@@ -2,16 +2,16 @@ import React from 'react';
 import { View, Button, StyleSheet, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ThemeProvider} from './ThemeContext';
+import { ThemeProvider} from './context/ThemeContext';
 
-import Primeira from './primeira';
-import Login from './login';
-import Escolha from './escolha';
-import Patio from './patio';
-import Formulario from './formulario';
-import Configuracao from './configuracao';
-import Desenvolvedores from './desenvolvedores';
-import Cadastro from './cadastro';
+import Primeira from './screens/primeira';
+import Login from './screens/login';
+import Escolha from './screens/escolha';
+import Patio from './screens/patio';
+import Configuracao from './screens/configuracao';
+import Desenvolvedores from './screens/desenvolvedores';
+import Cadastro from './screens/cadastro';
+import Formulario from './screens/formulario';
 
 const Stack = createNativeStackNavigator();
 

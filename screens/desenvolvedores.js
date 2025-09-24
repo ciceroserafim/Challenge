@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
-import { useTheme } from './ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 
 const desenvolvedores = [
-  { id: '1', nome: 'Cicero Serafim', rm: '556996', foto: require('./assets/cicero.jpeg') },
-  { id: '2', nome: 'Eduardo Monteiro', rm: '555871', foto: require('./assets/eduardo.jpeg') },
-  { id: '3', nome: 'Murillo Sant Anna', rm: '557183', foto: require('./assets/murillo.jpg') },
+  { id: '1', nome: 'Cicero Serafim', rm: '556996', foto: require('../images/cicero.jpeg') },
+  { id: '2', nome: 'Eduardo Monteiro', rm: '555871', foto: require('../images/eduardo.jpeg') },
+  { id: '3', nome: 'Murillo Sant Anna', rm: '557183', foto: require('../images/murillo.jpg') },
 ];
 
 export default function Desenvolvedores() {

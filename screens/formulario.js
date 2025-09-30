@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
@@ -9,6 +10,16 @@ export default function Formulario() {
   const [modelo, setModelo] = useState('');
   const [localizacao, setLocalizacao] = useState('');
   const [status, setStatus] = useState('');
+
+  const statusOptions = [
+    { label: 'Disponível', value: 'disponivel', color: '#4CAF50' },        
+    { label: 'Reservada', value: 'reservada', color: '#005ca7ff' },          
+    { label: 'Manutenção', value: 'manutencao', color: '#FFEB3B' },        
+    { label: ' Com danos estruturais', value: 'danos_estruturais', color: '#F44336' }, 
+    { label: 'Indisponível', value: 'indisponivel', color: '#9E9E9E' },   
+    { label: 'Sinistro', value: 'sinistro', color: '#000' },               
+    { label: 'Falta de peça', value: 'falta_peca', color: '#a91afcff'},
+  ];
 
   const handleSalvar = () => {
     console.log({ nome, placa, modelo, localizacao, status });
@@ -53,15 +64,23 @@ export default function Formulario() {
       />
 
       <Text style={[styles.label, { color: theme.modoEscuro ? '#fff' : '#000' }]}>Status da Moto</Text>
-      <TextInput
-        style={[styles.input, { backgroundColor: theme.modoEscuro ? '#555' : '#f2f2f2', color: theme.modoEscuro ? '#fff' : '#000', borderColor: theme.modoEscuro ? '#888' : '#ccc' }]}
-        value={status}
-        onChangeText={setStatus}
-        placeholder="Digite o status"
-        placeholderTextColor={theme.modoEscuro ? '#ccc' : '#999'}
-      />
+      <View style={styles.statusContainer}>
+        {statusOptions.map(option => (
+          <TouchableOpacity
+            key={option.value}
+            style={[
+              styles.statusButton,
+              { backgroundColor: option.color, borderWidth: status === option.value ? 3 : 0 }
+            ]}
+            onPress={() => setStatus(option.value)}
+          >
+            <Text style={{ color: option.value === 'manutencao' ? '#000' : '#fff', fontWeight: 'bold' }}>
+              {option.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
 
-      
       <TouchableOpacity style={styles.button} onPress={handleSalvar}>
         <Text style={styles.buttonText}>Salvar</Text>
       </TouchableOpacity>
@@ -73,6 +92,15 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, justifyContent: 'center', alignItems: 'center' },
   label: { marginBottom: 5, fontWeight: 'bold', fontSize: 16 },
   input: { borderWidth: 1, padding: 10, borderRadius: 6, marginBottom: 15, width: '100%' },
+  statusContainer: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginBottom: 15 },
+  statusButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 6,
+    marginVertical: 4,
+    minWidth: '30%',
+    alignItems: 'center'
+  },
   button: {
     backgroundColor: '#A5D6A7', 
     paddingHorizontal: 20,

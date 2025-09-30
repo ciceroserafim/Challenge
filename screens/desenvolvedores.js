@@ -12,19 +12,43 @@ export default function Desenvolvedores() {
   const theme = useTheme();
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.card }]}>
-      <Text style={[styles.titulo, { color: theme.colors.text }]}>
+    <View style={[styles.container, { backgroundColor: theme.modoEscuro ? '#222' : '#fefefe' }]}>
+      <Text
+        style={[
+          styles.titulo,
+          {
+            color: theme.modoEscuro ? '#00FF7F' : '#2E7D32',
+            textShadowColor: theme.modoEscuro ? 'rgba(0,255,127,0.4)' : 'rgba(46,125,50,0.3)',
+            textShadowOffset: { width: 2, height: 2 },
+            textShadowRadius: 3,
+          },
+        ]}
+      >
         🏍️ Desenvolvedores do Projeto 💨
       </Text>
+
       <FlatList
         data={desenvolvedores}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 20 }}
         renderItem={({ item }) => (
-          <View style={[styles.card, { backgroundColor: theme.colors.background }]}>
+          <View
+            style={[
+              styles.card,
+              {
+                backgroundColor: theme.modoEscuro ? '#333' : '#fff',
+                borderLeftColor: theme.modoEscuro ? '#00FF7F' : '#66BB6A',
+              },
+            ]}
+          >
             <Image source={item.foto} style={styles.foto} />
             <View style={styles.textoContainer}>
-              <Text style={[styles.nome, { color: theme.colors.text }]}>{item.nome}</Text>
-              <Text style={[styles.rm, { color: theme.colors.text }]}>RM: {item.rm}</Text>
+              <Text style={[styles.nome, { color: theme.modoEscuro ? '#fff' : '#222' }]}>
+                {item.nome}
+              </Text>
+              <Text style={[styles.rm, { color: theme.modoEscuro ? '#ccc' : '#555' }]}>
+                RM: {item.rm}
+              </Text>
             </View>
           </View>
         )}
@@ -40,7 +64,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
   titulo: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 30,
     textAlign: 'center',
@@ -48,31 +72,33 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     padding: 24,
-    borderRadius: 16,
+    borderRadius: 45,
     marginBottom: 20,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOpacity: 0.15,
     shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
     elevation: 5,
     borderLeftWidth: 6,
-    borderLeftColor: '#66BB6A',
   },
   foto: {
-    width: 90,
-    height: 90,
-    borderRadius: 70,
+    width: 97,
+    height: 98,
+    borderRadius: 45,
     marginRight: 25,
+    borderWidth: 2,
+    borderColor: '#fff',
   },
   textoContainer: {
     flex: 1,
   },
   nome: {
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: '700',
   },
   rm: {
     fontSize: 20,
-    marginTop: 5,
+    marginTop: 7,
   },
 });

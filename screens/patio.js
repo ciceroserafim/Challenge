@@ -20,40 +20,44 @@ export default function Patio() {
   ]);
 
   const statusColors = {
-    DISPONIVEL: 'green',
-    RESERVADA: 'blue',
-    MANUTENCAO: 'yellow',
-    FALTA_PECA: 'purple',
-    INDISPONIVEL: 'gray',
-    DANOS_ESTRUTURAIS: 'red',
-    SINISTRO: 'black',
+    DISPONIVEL: '#4CAF50',
+    RESERVADA: '#2196F3',
+    MANUTENCAO: '#FFC107',
+    FALTA_PECA: '#9C27B0',
+    INDISPONIVEL: '#9E9E9E',
+    DANOS_ESTRUTURAIS: '#F44336',
+    SINISTRO: '#000',
   };
 
   const renderItem = ({ item }) => {
-    const statusColor = statusColors[item.status] || 'gray';
-    const cardBackground = theme.modoEscuro ? '#555' : '#f2f2f2';
-    const textColor = theme.modoEscuro ? '#fff' : '#000';
+    const statusColor = statusColors[item.status] || '#9E9E9E';
+    const cardBackground = theme.modoEscuro ? '#444' : '#f9f9f9';
+    const textColor = theme.modoEscuro ? '#fff' : '#222';
 
     return (
-      <View style={[styles.card, { borderLeftWidth: 6, borderLeftColor: statusColor, backgroundColor: cardBackground }]}>
+      <View style={[styles.card, { backgroundColor: cardBackground, borderLeftColor: statusColor }]}>
+        <Text style={[styles.text, { color: textColor, fontWeight: 'bold' }]}>{item.modelo}</Text>
         <Text style={[styles.text, { color: textColor }]}>Placa: {item.placa}</Text>
-        <Text style={[styles.text, { color: textColor }]}>Modelo: {item.modelo}</Text>
         <Text style={[styles.text, { color: textColor }]}>Localização: {item.localizacao}</Text>
         <Text style={[styles.text, { color: textColor }]}>Setor: {item.setor}</Text>
-        <Text style={[styles.text, { color: statusColor }]}>Status: {item.status}</Text>
+        
+        <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
+          <Text style={styles.statusText}>{item.status.replace('_', ' ')}</Text>
+        </View>
 
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#A5D6A7' }]}
+          style={[styles.button, { backgroundColor: '#1B5E20' }]}
+          activeOpacity={0.7}
           onPress={() => alert(`Moto ${item.placa}`)}
         >
-          <Text style={styles.buttonText}>🔍 Detalhes</Text>
+          <Text style={[styles.buttonText, { color: '#fff' }]}>🔍 Detalhes</Text>
         </TouchableOpacity>
       </View>
     );
   };
 
-  const containerBg = theme.modoEscuro ? '#333' : '#fff';
-  const titleColor = theme.modoEscuro ? '#fff' : '#000';
+  const containerBg = theme.modoEscuro ? '#222' : '#fff';
+  const titleColor = theme.modoEscuro ? '#00FF7F' : '#2E7D32';
 
   return (
     <View style={[styles.container, { backgroundColor: containerBg }]}>
@@ -71,36 +75,57 @@ export default function Patio() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 15,
   },
   title: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 15,
     textAlign: 'center',
+    textShadowColor: 'rgba(0,255,127,0.5)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   card: {
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 12,
     marginBottom: 15,
+    borderLeftWidth: 6,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    elevation: 5,
   },
   text: {
     fontSize: 16,
-    marginBottom: 5,
+    marginBottom: 4,
+  },
+  statusBadge: {
+    marginTop: 8,
+    alignSelf: 'flex-start',
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+  },
+  statusText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
+    textTransform: 'capitalize',
   },
   button: {
-    marginTop: 10,
+    marginTop: 12,
     paddingVertical: 10,
     borderRadius: 10,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
+    elevation: 3,
   },
   buttonText: {
-    color: '#1B5E20',
     fontSize: 18,
     fontWeight: 'bold',
   },

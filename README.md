@@ -1,10 +1,12 @@
 Challenge
 
 
-## nome dos integrantes:
-**Cícero Gabriel Oliveira Serafim** -rm556996
-**Eduardo Miguel Forato Monteiro** -rm555871
-**Murillo Ari Sant'Anna** -rm557183
+## Integrantes
+
+- **Cícero Gabriel Oliveira Serafim** – RM556996  
+- **Eduardo Miguel Forato Monteiro** – RM555871  
+- **Murillo Ari Sant'Anna** – RM557183
+
 
 Estamos desenvolvendo um **projeto mobile em React Native com Expo**, voltado para apresentação à empresa **Mottu**.  
 O objetivo é acompanhar e validar o **ciclo de desenvolvimento do aplicativo** por meio de **sprints organizadas**, garantindo evolução contínua, entregas incrementais e alinhamento com as necessidades do negócio.

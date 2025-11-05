@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
+import { MotiView, MotiText } from 'moti';
 import { useTheme } from '../context/ThemeContext';
 
 export default function Login({ navigation }) {
@@ -20,19 +21,34 @@ export default function Login({ navigation }) {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.modoEscuro ? '#121212' : '#f2f2f2' }]}>
-      <Text
-        style={[
-          styles.title,
-          {
-            color: theme.modoEscuro ? '#00FF7F' : '#2E7D32',
-            textShadowColor: theme.modoEscuro ? 'rgba(0,255,127,0.4)' : 'rgba(46,125,50,0.3)',
-            textShadowOffset: { width: 2, height: 2 },
-            textShadowRadius: 4,
-          },
-        ]}
+      
+      {/* 🔥 Animação do título */}
+      <MotiView
+        from={{ opacity: 0, translateY: -30 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ type: 'timing', duration: 900 }}
       >
-        Bem-vindo!
-      </Text>
+        <MotiText
+          from={{ scale: 0.9, opacity: 0.7 }}
+          animate={{ scale: 1.05, opacity: 1 }}
+          transition={{
+            loop: true,
+            type: 'timing',
+            duration: 1600,
+          }}
+          style={[
+            styles.title,
+            {
+              color: theme.modoEscuro ? '#00FF7F' : '#2E7D32',
+              textShadowColor: theme.modoEscuro ? 'rgba(0,255,127,0.4)' : 'rgba(46,125,50,0.3)',
+              textShadowOffset: { width: 2, height: 2 },
+              textShadowRadius: 4,
+            },
+          ]}
+        >
+          Bem-vindo!
+        </MotiText>
+      </MotiView>
 
       <TextInput
         style={[

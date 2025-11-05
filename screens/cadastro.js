@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
+import { MotiView, MotiText } from 'moti';
 
 export default function CadastroUsuario() {
   const theme = useTheme();
@@ -32,15 +33,20 @@ export default function CadastroUsuario() {
     {
       backgroundColor: theme.modoEscuro ? '#1E1E1E' : '#fff',
       borderColor: theme.modoEscuro ? '#00FF7F' : '#2E7D32',
-      color: theme.modoEscuro ? '#fff' : '#222', 
+      color: theme.modoEscuro ? '#fff' : '#222',
     },
   ];
 
-  const placeholderColor = theme.modoEscuro ? '#fff' : '#222'; // Placeholder
+  const placeholderColor = theme.modoEscuro ? '#fff' : '#222';
 
   return (
     <View style={[styles.container, { backgroundColor: theme.modoEscuro ? '#121212' : '#f2f2f2' }]}>
-      <Text
+
+      {/* Título animado */}
+      <MotiText
+        from={{ opacity: 0, translateY: -30 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ type: 'timing', duration: 800 }}
         style={[
           styles.title,
           {
@@ -52,60 +58,74 @@ export default function CadastroUsuario() {
         ]}
       >
         Cadastro de Usuário
-      </Text>
+      </MotiText>
 
-      <TextInput
-        placeholder="Nome"
-        style={inputStyle}
-        placeholderTextColor={placeholderColor}
-        value={nome}
-        onChangeText={setNome}
-      />
-      <TextInput
-        placeholder="CPF"
-        style={inputStyle}
-        placeholderTextColor={placeholderColor}
-        value={cpf}
-        onChangeText={setCpf}
-        keyboardType="numeric"
-        maxLength={11}
-      />
-      <TextInput
-        placeholder="Email"
-        style={inputStyle}
-        placeholderTextColor={placeholderColor}
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        placeholder="Senha"
-        style={inputStyle}
-        placeholderTextColor={placeholderColor}
-        value={senha}
-        onChangeText={setSenha}
-        secureTextEntry
-      />
-      <TextInput
-        placeholder="Confirmar Senha"
-        style={inputStyle}
-        placeholderTextColor={placeholderColor}
-        value={confirmarSenha}
-        onChangeText={setConfirmarSenha}
-        secureTextEntry
-      />
-
-      <TouchableOpacity
-        style={[
-          styles.button,
-          { backgroundColor: theme.modoEscuro ? '#00FF7F' : '#2E7D32' },
-        ]}
-        onPress={handleCadastro}
-        activeOpacity={0.8}
+      {/* Inputs animados */}
+      <MotiView
+        from={{ opacity: 0, translateY: 50 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ type: 'timing', duration: 1000, delay: 300 }}
       >
-        <Text style={styles.buttonText}>Cadastrar</Text>
-      </TouchableOpacity>
+        <TextInput
+          placeholder="Nome"
+          style={inputStyle}
+          placeholderTextColor={placeholderColor}
+          value={nome}
+          onChangeText={setNome}
+        />
+        <TextInput
+          placeholder="CPF"
+          style={inputStyle}
+          placeholderTextColor={placeholderColor}
+          value={cpf}
+          onChangeText={setCpf}
+          keyboardType="numeric"
+          maxLength={11}
+        />
+        <TextInput
+          placeholder="Email"
+          style={inputStyle}
+          placeholderTextColor={placeholderColor}
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          placeholder="Senha"
+          style={inputStyle}
+          placeholderTextColor={placeholderColor}
+          value={senha}
+          onChangeText={setSenha}
+          secureTextEntry
+        />
+        <TextInput
+          placeholder="Confirmar Senha"
+          style={inputStyle}
+          placeholderTextColor={placeholderColor}
+          value={confirmarSenha}
+          onChangeText={setConfirmarSenha}
+          secureTextEntry
+        />
+      </MotiView>
+
+      {/* Botão animado */}
+      <MotiView
+        from={{ scale: 1 }}
+        animate={{ scale: 1.05 }}
+        transition={{ loop: true, type: 'timing', duration: 2000 }}
+      >
+        <TouchableOpacity
+          style={[
+            styles.button,
+            { backgroundColor: theme.modoEscuro ? '#00FF7F' : '#2E7D32' },
+          ]}
+          onPress={handleCadastro}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.buttonText}>Cadastrar</Text>
+        </TouchableOpacity>
+      </MotiView>
     </View>
   );
 }

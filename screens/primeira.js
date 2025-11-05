@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { MotiView, MotiText } from 'moti';
 import { useTheme } from '../context/ThemeContext';
-
 
 export default function Primeira({ navigation }) {
   const theme = useTheme();
@@ -9,15 +9,44 @@ export default function Primeira({ navigation }) {
     navigation.navigate('Login');
   };
 
- return (
+  return (
     <View style={[styles.container, { backgroundColor: theme.colors.card }]}>
-      <Text style={[styles.title, { color: theme.colors.text }]}>Bem-vindo ao App da Mottu</Text>
-      <Text style={[styles.description, { color: theme.colors.text }]}>
+      {/* Animação do título */}
+      <MotiText
+        from={{ opacity: 0, translateY: -30 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ type: 'timing', duration: 900 }}
+        style={[styles.title, { color: theme.colors.text }]}
+      >
+        Bem-vindo ao App da Mottu
+      </MotiText>
+
+      {/* Animação da descrição */}
+      <MotiText
+        from={{ opacity: 0, translateY: 30 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ type: 'timing', duration: 1000, delay: 300 }}
+        style={[styles.description, { color: theme.colors.text }]}
+      >
         Este é um aplicativo de demonstração com funcionalidades como login, pátio, formulário e configurações.
-      </Text>
-      <TouchableOpacity style={[styles.button, { backgroundColor: theme.modoEscuro ? '#228b22' : '#228b22' }]} onPress={handleComecar}>
-        <Text style={styles.buttonText}>Começar</Text>
-      </TouchableOpacity>
+      </MotiText>
+
+      {/* Animação do botão */}
+      <MotiView
+        from={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: 'spring', delay: 600, damping: 12 }}
+      >
+        <TouchableOpacity
+          style={[
+            styles.button,
+            { backgroundColor: theme.modoEscuro ? '#228b22' : '#228b22' },
+          ]}
+          onPress={handleComecar}
+        >
+          <Text style={styles.buttonText}>Começar</Text>
+        </TouchableOpacity>
+      </MotiView>
     </View>
   );
 }
@@ -28,27 +57,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fff',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#333',
   },
   description: {
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 40,
-    color: '#555',
   },
   button: {
-    backgroundColor: '#',
     paddingVertical: 17,
     paddingHorizontal: 30,
     borderRadius: 8,
-    elevation: 3,
+    elevation: 4,
   },
   buttonText: {
     color: '#fff',

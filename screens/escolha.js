@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
+import { MotiView, MotiText } from 'moti';
 
 export default function Escolha({ navigation }) {
   const theme = useTheme();
@@ -9,34 +10,71 @@ export default function Escolha({ navigation }) {
     navigation.navigate(screenName);
   };
 
+  const botoes = [
+    { label: '📍 Ir para Pátio', screen: 'Patio', color: '#4CAF50' },
+    { label: '👥 Desenvolvedores', screen: 'Desenvolvedores', color: '#4CAF50' },
+    { label: '📝 Preencher Formulário', screen: 'Formulario', color: '#4CAF50' },
+    { label: '⚙️ Configurações', screen: 'Configuracao', color: '#4CAF50' },
+  ];
+
   return (
     <View
       style={[styles.container, { backgroundColor: theme.modoEscuro ? '#222' : '#fefefe' }]}
     >
-      
-      <View style={[styles.headerContainer, { backgroundColor: theme.modoEscuro ? '#333' : '#A5D6A7' }]}>
-        <Text style={[styles.title, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}>
-          Escolha uma Opção
-        </Text>
-        <Text style={[styles.subtitle, { color: theme.modoEscuro ? '#7FFFD4' : '#fff' }]}>
-          Navegue pelas seções do aplicativo
-        </Text>
-      </View>
-
-      {[
-        { label: '📍 Ir para Pátio', screen: 'Patio', color: '#4CAF50' },
-        { label: '👥 Desenvolvedores', screen: 'Desenvolvedores', color: '#4CAF50' },
-        { label: '📝 Preencher Formulário', screen: 'Formulario', color: '#4CAF50' },
-        { label: '⚙️ Configurações', screen: 'Configuracao', color: '#4CAF50' },
-      ].map((btn) => (
-        <TouchableOpacity
-          key={btn.screen}
-          style={[styles.button, { backgroundColor: btn.color }]}
-          activeOpacity={0.8}
-          onPress={() => navigateTo(btn.screen)}
+      <MotiView
+        from={{ opacity: 0, translateY: -40 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        transition={{ type: 'timing', duration: 800 }}
+        style={[
+          styles.headerContainer,
+          { backgroundColor: theme.modoEscuro ? '#333' : '#A5D6A7' },
+        ]}
+      >
+        <MotiText
+          from={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: 'spring', delay: 200 }}
+          style={[styles.title, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}
         >
-          <Text style={styles.buttonText}>{btn.label}</Text>
-        </TouchableOpacity>
+          Escolha uma Opção
+        </MotiText>
+
+        <MotiText
+          from={{ opacity: 0, translateY: 10 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ type: 'timing', duration: 1000, delay: 400 }}
+          style={[styles.subtitle, { color: theme.modoEscuro ? '#7FFFD4' : '#fff' }]}
+        >
+          Navegue pelas seções do aplicativo
+        </MotiText>
+      </MotiView>
+
+      {botoes.map((btn, index) => (
+        <MotiView
+          key={btn.screen}
+          from={{ opacity: 0, translateY: 40 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{
+            type: 'timing',
+            duration: 700,
+            delay: 600 + index * 150, // efeito cascata 💫
+          }}
+        >
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: btn.color }]}
+            activeOpacity={0.85}
+            onPress={() => navigateTo(btn.screen)}
+          >
+            <MotiText
+              from={{ opacity: 0.7, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ loop: true, duration: 2000, type: 'timing' }}
+              style={styles.buttonText}
+            >
+              {btn.label}
+            </MotiText>
+          </TouchableOpacity>
+        </MotiView>
       ))}
     </View>
   );

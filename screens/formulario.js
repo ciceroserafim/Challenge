@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../context/ThemeContext';
+import { enviarNotificacaoLocal } from '../utils/notifications'; // ✅ Import da função de notificação
 
 export default function Formulario({ navigation }) {
-
-  
   const theme = useTheme();
   const [nome, setNome] = useState('');
   const [placa, setPlaca] = useState('');
@@ -45,6 +44,12 @@ export default function Formulario({ navigation }) {
 
       await AsyncStorage.setItem('@motos', JSON.stringify(novaLista));
 
+      // ✅ Dispara a notificação local
+      await enviarNotificacaoLocal(
+        '🏍️ Nova moto adicionada!',
+        `Modelo: ${modelo}\nPlaca: ${placa}\nResponsável: ${nome}`
+      );
+
       Alert.alert('Sucesso', 'Moto cadastrada com sucesso!');
       setNome('');
       setPlaca('');
@@ -52,7 +57,7 @@ export default function Formulario({ navigation }) {
       setLocalizacao('');
       setStatus('');
 
-      navigation.navigate('Pátio'); // leva direto para a tela do pátio
+      navigation.navigate('Patio');
     } catch (error) {
       console.error(error);
       Alert.alert('Erro', 'Não foi possível salvar a moto.');

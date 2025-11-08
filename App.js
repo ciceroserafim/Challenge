@@ -1,7 +1,9 @@
 import 'react-native-reanimated';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as Notifications from 'expo-notifications';
+import { Platform } from 'react-native';
 import { ThemeProvider } from './context/ThemeContext';
 
 import Primeira from './screens/primeira';
@@ -16,7 +18,35 @@ import EsqueciSenha from './screens/EsqueceuSenha';
 
 const Stack = createNativeStackNavigator();
 
+// 🔔 Configura o comportamento das notificações (como serão exibidas)
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
 export default function App() {
+  useEffect(() => {
+    // Pede permissão para enviar notificações
+    const pedirPermissao = async () => {
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Permissão para notificações não concedida!');
+      }
+    };
+
+    pedirPermissao();
+
+    // (opcional) Escuta quando uma notificação é recebida
+    const subscription = Notifications.addNotificationReceivedListener(notification => {
+      console.log('🔔 Notificação recebida:', notification);
+    });
+
+    return () => subscription.remove();
+  }, []);
+
   return (
     <ThemeProvider>
       <NavigationContainer>
@@ -24,7 +54,7 @@ export default function App() {
           initialRouteName="Primeira"
           screenOptions={{
             headerShown: false,
-            animation: 'fade', // padrão global: transição suave
+            animation: 'fade',
             animationDuration: 400,
           }}
         >
@@ -38,11 +68,8 @@ export default function App() {
           <Stack.Screen
             name="Desenvolvedores"
             component={Desenvolvedores}
-            options={{
-              animation: 'slide_from_bottom',
-            }}
+            options={{ animation: 'slide_from_bottom' }}
           />
-
           <Stack.Screen name="Cadastro" component={Cadastro} />
         </Stack.Navigator>
       </NavigationContainer>

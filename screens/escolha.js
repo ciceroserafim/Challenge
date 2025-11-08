@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MotiView, MotiText } from 'moti';
 
 export default function Escolha({ navigation }) {
-  const theme = useTheme();
+  const { modoEscuro, setModoEscuro } = useTheme(); // pega direto do contexto
+  const [temaAtivo, setTemaAtivo] = useState(modoEscuro);
+
+  useEffect(() => {
+    const carregarTema = async () => {
+      const temaSalvo = await AsyncStorage.getItem('modoEscuro');
+      if (temaSalvo !== null) {
+        const modoSalvo = JSON.parse(temaSalvo);
+        setTemaAtivo(modoSalvo);
+        setModoEscuro(modoSalvo); // sincroniza com o contexto global
+      }
+    };
+    carregarTema();
+  }, []);
+
+  useEffect(() => {
+    setTemaAtivo(modoEscuro);
+  }, [modoEscuro]);
 
   const navigateTo = (screenName) => {
     navigation.navigate(screenName);
@@ -12,8 +30,8 @@ export default function Escolha({ navigation }) {
 
   const cards = [
     { label: '📍 Ir para Pátio', screen: 'Patio', color: '#4CAF50', desc: 'Gerencie o pátio e visualize as motos.' },
-    { label: '👥 Desenvolvedores', screen: 'Desenvolvedores', color: '#43A047', desc: 'Conheça quem criou o aplicativo.' },
     { label: '📝 Preencher Formulário', screen: 'Formulario', color: '#388E3C', desc: 'Adicione novas informações facilmente.' },
+    { label: '👥 Desenvolvedores', screen: 'Desenvolvedores', color: '#43A047', desc: 'Conheça quem criou o aplicativo.' },
     { label: '⚙️ Configurações', screen: 'Configuracao', color: '#2E7D32', desc: 'Ajuste o tema e preferências do app.' },
   ];
 
@@ -21,7 +39,7 @@ export default function Escolha({ navigation }) {
     <View
       style={[
         styles.container,
-        { backgroundColor: theme.modoEscuro ? '#111' : '#fefefe' },
+        { backgroundColor: temaAtivo ? '#111' : '#fefefe' },
       ]}
     >
       {/* Cabeçalho */}
@@ -31,7 +49,7 @@ export default function Escolha({ navigation }) {
         transition={{ type: 'timing', duration: 800 }}
         style={[
           styles.headerContainer,
-          { backgroundColor: theme.modoEscuro ? '#1e1e1e' : '#C8E6C9' },
+          { backgroundColor: temaAtivo ? '#1e1e1e' : '#C8E6C9' },
         ]}
       >
         <MotiText
@@ -40,7 +58,7 @@ export default function Escolha({ navigation }) {
           transition={{ type: 'spring', delay: 200 }}
           style={[
             styles.title,
-            { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' },
+            { color: temaAtivo ? '#00FF7F' : '#2E7D32' },
           ]}
         >
           Escolha uma Opção
@@ -49,7 +67,7 @@ export default function Escolha({ navigation }) {
         <Text
           style={[
             styles.subtitle,
-            { color: theme.modoEscuro ? '#7FFFD4' : '#2E7D32' },
+            { color: temaAtivo ? '#7FFFD4' : '#2E7D32' },
           ]}
         >
           Navegue pelas seções do aplicativo
@@ -76,7 +94,7 @@ export default function Escolha({ navigation }) {
               style={[
                 styles.card,
                 {
-                  backgroundColor: theme.modoEscuro ? '#1a1a1a' : '#E8F5E9',
+                  backgroundColor: temaAtivo ? '#1a1a1a' : '#E8F5E9',
                   borderColor: card.color,
                 },
               ]}
@@ -89,7 +107,7 @@ export default function Escolha({ navigation }) {
               <Text
                 style={[
                   styles.cardDesc,
-                  { color: theme.modoEscuro ? '#ccc' : '#444' },
+                  { color: temaAtivo ? '#ccc' : '#444' },
                 ]}
               >
                 {card.desc}
@@ -138,8 +156,8 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   card: {
-    width: 300,
-    height: 130,
+    width: 320,
+    height: 140,
     borderRadius: 20,
     padding: 20,
     marginVertical: 10,
@@ -156,7 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 6,
+    marginBottom: 8,
   },
   cardDesc: {
     fontSize: 15,

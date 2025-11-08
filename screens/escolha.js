@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
 import { MotiView, MotiText } from 'moti';
 
@@ -10,72 +10,94 @@ export default function Escolha({ navigation }) {
     navigation.navigate(screenName);
   };
 
-  const botoes = [
-    { label: '📍 Ir para Pátio', screen: 'Patio', color: '#4CAF50' },
-    { label: '👥 Desenvolvedores', screen: 'Desenvolvedores', color: '#4CAF50' },
-    { label: '📝 Preencher Formulário', screen: 'Formulario', color: '#4CAF50' },
-    { label: '⚙️ Configurações', screen: 'Configuracao', color: '#4CAF50' },
+  const cards = [
+    { label: '📍 Ir para Pátio', screen: 'Patio', color: '#4CAF50', desc: 'Gerencie o pátio e visualize as motos.' },
+    { label: '👥 Desenvolvedores', screen: 'Desenvolvedores', color: '#43A047', desc: 'Conheça quem criou o aplicativo.' },
+    { label: '📝 Preencher Formulário', screen: 'Formulario', color: '#388E3C', desc: 'Adicione novas informações facilmente.' },
+    { label: '⚙️ Configurações', screen: 'Configuracao', color: '#2E7D32', desc: 'Ajuste o tema e preferências do app.' },
   ];
 
   return (
     <View
-      style={[styles.container, { backgroundColor: theme.modoEscuro ? '#222' : '#fefefe' }]}
+      style={[
+        styles.container,
+        { backgroundColor: theme.modoEscuro ? '#111' : '#fefefe' },
+      ]}
     >
+      {/* Cabeçalho */}
       <MotiView
         from={{ opacity: 0, translateY: -40 }}
         animate={{ opacity: 1, translateY: 0 }}
         transition={{ type: 'timing', duration: 800 }}
         style={[
           styles.headerContainer,
-          { backgroundColor: theme.modoEscuro ? '#333' : '#A5D6A7' },
+          { backgroundColor: theme.modoEscuro ? '#1e1e1e' : '#C8E6C9' },
         ]}
       >
         <MotiText
-          from={{ scale: 0.8, opacity: 0 }}
+          from={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: 'spring', delay: 200 }}
-          style={[styles.title, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}
+          style={[
+            styles.title,
+            { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' },
+          ]}
         >
           Escolha uma Opção
         </MotiText>
 
-        <MotiText
-          from={{ opacity: 0, translateY: 10 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{ type: 'timing', duration: 1000, delay: 400 }}
-          style={[styles.subtitle, { color: theme.modoEscuro ? '#7FFFD4' : '#fff' }]}
+        <Text
+          style={[
+            styles.subtitle,
+            { color: theme.modoEscuro ? '#7FFFD4' : '#2E7D32' },
+          ]}
         >
           Navegue pelas seções do aplicativo
-        </MotiText>
+        </Text>
       </MotiView>
 
-      {botoes.map((btn, index) => (
-        <MotiView
-          key={btn.screen}
-          from={{ opacity: 0, translateY: 40 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          transition={{
-            type: 'timing',
-            duration: 700,
-            delay: 600 + index * 150, // efeito cascata 💫
-          }}
-        >
-          <TouchableOpacity
-            style={[styles.button, { backgroundColor: btn.color }]}
-            activeOpacity={0.85}
-            onPress={() => navigateTo(btn.screen)}
+      {/* Cards */}
+      <ScrollView
+        contentContainerStyle={styles.cardsContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        {cards.map((card, index) => (
+          <MotiView
+            key={card.screen}
+            from={{ opacity: 0, translateY: 40 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{
+              type: 'timing',
+              duration: 700,
+              delay: 500 + index * 150,
+            }}
           >
-            <MotiText
-              from={{ opacity: 0.7, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ loop: true, duration: 2000, type: 'timing' }}
-              style={styles.buttonText}
+            <TouchableOpacity
+              style={[
+                styles.card,
+                {
+                  backgroundColor: theme.modoEscuro ? '#1a1a1a' : '#E8F5E9',
+                  borderColor: card.color,
+                },
+              ]}
+              activeOpacity={0.85}
+              onPress={() => navigateTo(card.screen)}
             >
-              {btn.label}
-            </MotiText>
-          </TouchableOpacity>
-        </MotiView>
-      ))}
+              <Text style={[styles.cardTitle, { color: card.color }]}>
+                {card.label}
+              </Text>
+              <Text
+                style={[
+                  styles.cardDesc,
+                  { color: theme.modoEscuro ? '#ccc' : '#444' },
+                ]}
+              >
+                {card.desc}
+              </Text>
+            </TouchableOpacity>
+          </MotiView>
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -83,54 +105,61 @@ export default function Escolha({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    paddingHorizontal: 20,
     alignItems: 'center',
-    padding: 20,
+    justifyContent: 'center',
   },
   headerContainer: {
-    padding: 20,
-    borderRadius: 15,
-    marginBottom: 30,
+    padding: 25,
+    borderRadius: 20,
+    marginBottom: 20,
+    marginTop: 60,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 6,
+    width: '90%',
   },
   title: {
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
-    textShadowColor: 'rgba(0,255,127,0.5)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 4,
+    marginBottom: 8,
   },
   subtitle: {
-    fontSize: 23,
+    fontSize: 17,
     textAlign: 'center',
-    marginTop: 5,
-    textShadowColor: 'rgba(127,255,212,0.5)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
   },
-  button: {
-    paddingVertical: 13,
-    paddingHorizontal: 20,
-    borderRadius: 15,
-    marginVertical: 11,
-    width: '85%',
+  cardsContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+  },
+  card: {
+    width: 300,
+    height: 130,
+    borderRadius: 20,
+    padding: 20,
+    marginVertical: 10,
+    borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
+    shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.7,
-    shadowRadius: 5,
-    elevation: 6,
+    shadowRadius: 6,
+    elevation: 8,
   },
-  buttonText: {
-    color: '#fff',
+  cardTitle: {
     fontSize: 22,
     fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 6,
+  },
+  cardDesc: {
+    fontSize: 15,
+    textAlign: 'center',
   },
 });

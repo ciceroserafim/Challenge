@@ -9,18 +9,11 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  // ✅ Checa login automático ao abrir
+  // ✅ Login automático
   useEffect(() => {
     const checkLogin = async () => {
-      try {
-        const loggedEmail = await AsyncStorage.getItem('@logado_email');
-        if (loggedEmail) {
-          // Usuário já está logado
-          navigation.replace('Escolha');
-        }
-      } catch (error) {
-        console.error('Erro ao checar login:', error);
-      }
+      const loggedEmail = await AsyncStorage.getItem('@logado_email');
+      if (loggedEmail) navigation.replace('Escolha');
     };
     checkLogin();
   }, []);
@@ -31,34 +24,31 @@ export default function Login({ navigation }) {
       return;
     }
 
-    try {
-      // Busca usuário localmente
-      const usuarioJSON = await AsyncStorage.getItem(`@usuario_${email}`);
-      if (!usuarioJSON) {
-        Alert.alert('Erro', 'Usuário inválido ou não cadastrado.');
-        return;
-      }
-
-      const usuario = JSON.parse(usuarioJSON);
-      if (usuario.senha !== senha) {
-        Alert.alert('Erro', 'Senha incorreta.');
-        return;
-      }
-
-      // Login válido: salva email logado
-      await AsyncStorage.setItem('@logado_email', email);
-
-      navigation.replace('Escolha'); // Vai para a tela principal
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Erro', 'Não foi possível fazer login. Tente novamente.');
+    const usuarioJSON = await AsyncStorage.getItem(`@usuario_${email}`);
+    if (!usuarioJSON) {
+      Alert.alert('Erro', 'Usuário inválido ou não cadastrado.');
+      return;
     }
+
+    const usuario = JSON.parse(usuarioJSON);
+    if (usuario.senha !== senha) {
+      Alert.alert('Erro', 'Senha incorreta.');
+      return;
+    }
+
+    await AsyncStorage.setItem('@logado_email', email);
+    navigation.replace('Escolha');
   };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.modoEscuro ? '#121212' : '#f2f2f2' }]}>
-      <MotiView from={{ opacity: 0, translateY: -30 }} animate={{ opacity: 1, translateY: 0 }} transition={{ type: 'timing', duration: 900 }}>
-        <MotiText from={{ scale: 0.9, opacity: 0.7 }} animate={{ scale: 1.05, opacity: 1 }} transition={{ loop: true, type: 'timing', duration: 1600 }} style={[styles.title, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}>
+      <MotiView from={{ opacity: 0, translateY: -30 }} animate={{ opacity: 1, translateY: 0 }}>
+        <MotiText
+          from={{ scale: 0.9 }}
+          animate={{ scale: 1.05 }}
+          transition={{ loop: true, type: 'timing', duration: 1600 }}
+          style={[styles.title, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}
+        >
           Bem-vindo!
         </MotiText>
       </MotiView>
@@ -81,16 +71,16 @@ export default function Login({ navigation }) {
         onChangeText={setSenha}
       />
 
-      <TouchableOpacity style={[styles.button, { backgroundColor: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]} onPress={handleLogin} activeOpacity={0.8}>
+      <TouchableOpacity style={[styles.button, { backgroundColor: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('EsqueciSenha')}>
-        <Text style={[styles.link, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32', textDecorationLine: 'underline' }]}>Esqueceu a senha?</Text>
+        <Text style={[styles.link, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}>Esqueceu a senha?</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
-        <Text style={[styles.link, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32', textDecorationLine: 'underline' }]}>Não tem cadastro? Cadastre-se aqui</Text>
+        <Text style={[styles.link, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}>Não tem cadastro? Cadastre-se aqui</Text>
       </TouchableOpacity>
     </View>
   );
@@ -99,8 +89,8 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', padding: 25 },
   title: { fontSize: 32, fontWeight: 'bold', marginBottom: 30, textAlign: 'center' },
-  input: { height: 50, borderWidth: 1.5, marginBottom: 20, paddingHorizontal: 15, borderRadius: 12, fontSize: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 3 }, shadowOpacity: 0.15, shadowRadius: 4, elevation: 3 },
-  button: { paddingVertical: 15, borderRadius: 12, alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 5, elevation: 5, marginBottom: 20 },
+  input: { height: 50, borderWidth: 1.5, marginBottom: 20, paddingHorizontal: 15, borderRadius: 12 },
+  button: { paddingVertical: 15, borderRadius: 12, alignItems: 'center', marginBottom: 20 },
   buttonText: { color: '#fff', fontSize: 20, fontWeight: 'bold' },
-  link: { textAlign: 'center', marginVertical: 8, fontSize: 15 },
+  link: { textAlign: 'center', marginVertical: 8, fontSize: 15, textDecorationLine: 'underline' },
 });

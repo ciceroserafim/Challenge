@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  StyleSheet,
-  Alert
-} from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function EsqueciSenha({ navigation }) {
   const [email, setEmail] = useState('');
 
-  const handleRecuperarSenha = () => {
-    if (!email) {
+  const handleRecuperarSenha = async () => {
+    if (!email.trim()) {
       Alert.alert('Erro', 'Por favor, preencha o e-mail.');
       return;
     }
 
-    // Simula envio de recuperação
-    Alert.alert(
-      'Recuperação de Senha',
-      `Se o e-mail ${email} estiver cadastrado, enviaremos instruções para redefinir sua senha.`
-    );
+    try {
+      const usuarioJSON = await AsyncStorage.getItem(`@usuario_${email}`);
+      if (!usuarioJSON) {
+        Alert.alert('Erro', 'E-mail não cadastrado.');
+        return;
+      }
 
-    // Opcional: voltar para login
-    navigation.navigate('Login');
+      const usuario = JSON.parse(usuarioJSON);
+      Alert.alert(
+        'Recuperação de Senha',
+        `Sua senha cadastrada é: ${usuario.senha}`
+      );
+
+      navigation.navigate('Login');
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Não foi possível recuperar a senha.');
+    }
   };
 
   return (
@@ -46,23 +50,7 @@ export default function EsqueciSenha({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 12,
-    marginBottom: 20,
-    borderRadius: 8,
-  },
+  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#fff' },
+  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+  input: { borderWidth: 1, borderColor: '#ccc', padding: 12, marginBottom: 20, borderRadius: 8 },
 });

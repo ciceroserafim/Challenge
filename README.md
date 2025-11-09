@@ -14,8 +14,8 @@ Aplicativo mobile desenvolvido com **React Native + Expo** para demonstrar a ges
 ## Integrantes
 
 - **Cícero Gabriel Oliveira Serafim** – RM556996 – [github.com/ciceroserafim](https://github.com/ciceroserafim)  
-- **Eduardo Miguel Forato Monteiro** – RM555871 – [github.com/EduardoMiguelM](https://github.com/EduardoMigueFM)  
-- **Murillo Ari Sant'Anna** – RM557183 – [github.com/murillosantanna](https://github.com/murillosantanna)
+- **Eduardo Miguel Forato Monteiro** – RM555871 – [github.com/EduardoMiguelFM](https://github.com/EduardoMiguelFM)  
+- **Murillo Ari Sant'Anna** – RM557183 – [github.com/Murillo77](https://github.com/Murillo77)
 
 ## Como rodar o projeto
 

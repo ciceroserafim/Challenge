@@ -34,7 +34,12 @@ export const I18nProvider = ({ children }) => {
           i18n.locale = idiomaSalvo;
         } else {
           // Detecta o idioma do dispositivo
-          const idiomaDispositivo = Localization.locale.split('-')[0];
+          const locales = typeof Localization.getLocales === 'function' ? Localization.getLocales() : [];
+          let idiomaDispositivo =
+            locales?.[0]?.languageCode ||
+            (locales?.[0]?.languageTag ? locales[0].languageTag.split('-')[0] : undefined) ||
+            (typeof Localization.locale === 'string' ? Localization.locale.split('-')[0] : undefined) ||
+            'pt';
           const idiomaSuportado = ['pt', 'es'].includes(idiomaDispositivo) ? idiomaDispositivo : 'pt';
           setLocale(idiomaSuportado);
           i18n.locale = idiomaSuportado;

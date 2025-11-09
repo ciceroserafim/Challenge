@@ -17,6 +17,7 @@ import Cadastro from './screens/cadastro';
 import Formulario from './screens/formulario';
 import EsqueciSenha from './screens/EsqueceuSenha';
 import Perfil from './screens/perfil';
+import SobreApp from './screens/sobreApp';
 
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +76,7 @@ export default function App() {
               options={{ animation: 'slide_from_bottom' }}
             />
             <Stack.Screen name="Cadastro" component={Cadastro} />
+            <Stack.Screen name="SobreApp" component={SobreApp} />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

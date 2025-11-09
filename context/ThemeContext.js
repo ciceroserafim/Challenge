@@ -18,6 +18,7 @@ export const ThemeProvider = ({ children }) => {
         switchTrack: '#ffffffff',
         switchThumb: '#000000ff',
         logoutButton: '#c0392b',
+        primary: '#82e28f',
       }
     : modoMottu
     ? {
@@ -27,6 +28,7 @@ export const ThemeProvider = ({ children }) => {
         switchTrack: '#75ebaaff',
         switchThumb: '#185f02',
         logoutButton: '#2e7d32',
+        primary: '#185f02',
       }
     : {
         background: '#f0f4f8',
@@ -35,6 +37,7 @@ export const ThemeProvider = ({ children }) => {
         switchTrack: '#fcfcfcff',
         switchThumb: '#bfd1aeff',
         logoutButton: '#e74c3c',
+        primary: '#2e7d32',
       };
 
   // Aqui passamos **tudo** para o contexto

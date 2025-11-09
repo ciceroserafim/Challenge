@@ -220,9 +220,19 @@
     "mottuMode": "Modo Mottu",
     "notifications": "Notificaciones",
     "language": "Idioma",
+    "aboutApp": "Acerca de la App",
+    "open": "Abrir",
     "logout": "Salir",
     "cancel": "Cancelar",
     "delete": "Eliminar"
+  },
+  "about": {
+    "title": "Acerca de la App",
+    "description": "Esta versión fue construida a partir del commit siguiente. Informe este hash para validar la entrega.",
+    "commitHash": "Hash del commit",
+    "generatedAt": "Generado en",
+    "back": "Volver",
+    "commitUnavailable": "hash-no-disponible"
   },
   "developers": {
     "title": "🏍️ Desarrolladores del Proyecto 💨",

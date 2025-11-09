@@ -113,6 +113,14 @@ export default function Configuracao({ navigation }) {
         </Text>
       </TouchableOpacity>
 
+      <TouchableOpacity
+        style={[styles.optionRow, { backgroundColor: colors.card, borderColor: colors.text }]}
+        onPress={() => navigation.navigate('SobreApp')}
+      >
+        <Text style={[styles.optionText, { color: colors.text }]}>{t('settings.aboutApp')}</Text>
+        <Text style={[styles.optionLink, { color: colors.primary }]}>{t('settings.open')}</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={[styles.logoutButton, { backgroundColor: colors.logoutButton }]} onPress={handleLogout}>
         <Text style={[styles.logoutButtonText, { color: colors.text }]}>{t('settings.logout')}</Text>
       </TouchableOpacity>
@@ -133,6 +141,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   optionText: { fontSize: 18 },
+  optionLink: { fontSize: 16, fontWeight: '600' },
   logoutButton: { paddingVertical: 15, borderRadius: 12, alignItems: 'center', marginTop: 10 },
   logoutButtonText: { fontSize: 18, fontWeight: 'bold', color: '#fff' },
 });

@@ -72,7 +72,7 @@ export default function Patio() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 15 },
-  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' },
+  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 15, marginTop: 50, textAlign: 'center' },
   card: {
     padding: 15,
     borderRadius: 12,

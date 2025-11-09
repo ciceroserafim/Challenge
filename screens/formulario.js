@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../context/ThemeContext';
-import { enviarNotificacaoLocal } from '../utils/notifications'; // ✅ Import da função de notificação
+import { registrarNotificacoes, enviarNotificacaoPush } from '../utils/notifications';
 
 export default function Formulario({ navigation }) {
   const theme = useTheme();
@@ -11,6 +11,7 @@ export default function Formulario({ navigation }) {
   const [modelo, setModelo] = useState('');
   const [localizacao, setLocalizacao] = useState('');
   const [status, setStatus] = useState('');
+  const [expoToken, setExpoToken] = useState(null);
 
   const statusOptions = [
     { label: 'Disponível', value: 'DISPONIVEL', color: '#4CAF50' },
@@ -21,6 +22,19 @@ export default function Formulario({ navigation }) {
     { label: 'Sinistro', value: 'SINISTRO', color: '#000' },
     { label: 'Falta de peça', value: 'FALTA_PECA', color: '#a91afcff' },
   ];
+
+  // 🟢 Registrar token push ao abrir o formulário
+  useEffect(() => {
+    const registrarToken = async () => {
+      let token = await AsyncStorage.getItem('@expo_push_token');
+      if (!token) {
+        token = await registrarNotificacoes();
+        if (token) await AsyncStorage.setItem('@expo_push_token', token);
+      }
+      setExpoToken(token);
+    };
+    registrarToken();
+  }, []);
 
   const handleSalvar = async () => {
     if (!nome || !placa || !modelo || !localizacao || !status) {
@@ -41,14 +55,16 @@ export default function Formulario({ navigation }) {
       const motosSalvas = await AsyncStorage.getItem('@motos');
       const lista = motosSalvas ? JSON.parse(motosSalvas) : [];
       const novaLista = [...lista, novaMoto];
-
       await AsyncStorage.setItem('@motos', JSON.stringify(novaLista));
 
-      // ✅ Dispara a notificação local
-      await enviarNotificacaoLocal(
-        '🏍️ Nova moto adicionada!',
-        `Modelo: ${modelo}\nPlaca: ${placa}\nResponsável: ${nome}`
-      );
+      // ✅ Enviar push real
+      if (expoToken) {
+        await enviarNotificacaoPush(
+          expoToken,
+          '🏍️ Nova moto adicionada!',
+          `Modelo: ${modelo}\nPlaca: ${placa}\nResponsável: ${nome}`
+        );
+      }
 
       Alert.alert('Sucesso', 'Moto cadastrada com sucesso!');
       setNome('');
@@ -56,7 +72,6 @@ export default function Formulario({ navigation }) {
       setModelo('');
       setLocalizacao('');
       setStatus('');
-
       navigation.navigate('Patio');
     } catch (error) {
       console.error(error);

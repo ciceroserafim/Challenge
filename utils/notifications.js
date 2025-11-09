@@ -1,7 +1,7 @@
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
-// Configura como as notificações são exibidas quando o app está aberto
+// Configura como as notificações aparecem quando o app está aberto
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -10,7 +10,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-// Função para solicitar permissão e pegar o token (caso queira push real futuramente)
+// Solicita permissão e retorna o token
 export async function registrarNotificacoes() {
   const { status } = await Notifications.requestPermissionsAsync();
   if (status !== 'granted') {
@@ -18,9 +18,8 @@ export async function registrarNotificacoes() {
     return null;
   }
 
-  // Retorna o token do dispositivo (para uso com backend)
   const token = (await Notifications.getExpoPushTokenAsync()).data;
-  console.log('Expo Token:', token);
+  console.log('Expo Push Token:', token);
 
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('default', {
@@ -34,15 +33,19 @@ export async function registrarNotificacoes() {
   return token;
 }
 
-// Função para disparar uma notificação local
+// Dispara uma notificação local (já existente)
 export async function enviarNotificacaoLocal(titulo, corpo) {
   await Notifications.scheduleNotificationAsync({
-    content: {
-      title: titulo,
-      body: corpo,
-      sound: true,
-      vibrate: [200, 100, 200],
-    },
-    trigger: null, // envia imediatamente
+    content: { title: titulo, body: corpo, sound: true },
+    trigger: null,
+  });
+}
+
+// **Envia notificação push via Expo**
+export async function enviarPush(token, titulo, corpo) {
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ to: token, title: titulo, body: corpo, sound: 'default' }),
   });
 }

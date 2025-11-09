@@ -149,7 +149,7 @@ export default function Configuracao({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20 },
-  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 20, marginTop: 50, textAlign: 'center' },
   card: { padding: 15, borderWidth: 1.5, borderRadius: 12, marginBottom: 25 },
   infoText: { fontSize: 18, marginBottom: 8 },
   optionRow: {

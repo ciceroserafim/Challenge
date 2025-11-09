@@ -122,13 +122,25 @@ export default function Patio({ navigation }) {
     }
   }, [handleAuthError, t]);
 
+  const normalizePatioList = useCallback((data) => {
+    if (Array.isArray(data)) return data;
+    if (data && typeof data === 'object') {
+      if (Array.isArray(data.content)) return data.content;
+      if (Array.isArray(data.data)) return data.data;
+      if (Array.isArray(data.patios)) return data.patios;
+      if (Array.isArray(data.items)) return data.items;
+      if (Array.isArray(data.results)) return data.results;
+    }
+    return [];
+  }, []);
+
   const loadPatios = useCallback(async () => {
     setPatioError(null);
     setLoading((prev) => ({ ...prev, patios: true }));
 
     try {
       const data = await PatioApi.list();
-      setPatios(Array.isArray(data) ? data : []);
+      setPatios(normalizePatioList(data));
     } catch (error) {
       console.error('Erro ao carregar pátios:', error);
       if (error.code === 'NETWORK_ERROR') {
@@ -143,7 +155,7 @@ export default function Patio({ navigation }) {
     } finally {
       setLoading((prev) => ({ ...prev, patios: false }));
     }
-  }, [handleAuthError, t]);
+  }, [handleAuthError, t, normalizePatioList]);
 
   useFocusEffect(
     useCallback(() => {

@@ -47,15 +47,28 @@ export default function Formulario({ navigation }) {
     };
   }, []);
 
+  const normalizePatioList = useCallback((data) => {
+    if (Array.isArray(data)) return data;
+    if (data && typeof data === 'object') {
+      if (Array.isArray(data.content)) return data.content;
+      if (Array.isArray(data.data)) return data.data;
+      if (Array.isArray(data.patios)) return data.patios;
+      if (Array.isArray(data.items)) return data.items;
+      if (Array.isArray(data.results)) return data.results;
+    }
+    return [];
+  }, []);
+
   const carregarPatios = useCallback(async () => {
     setCarregandoPatios(true);
     setPatiosError(null);
     try {
       const dados = await PatioApi.list();
+      const listaPatios = normalizePatioList(dados);
       if (isMountedRef.current) {
-        setPatios(dados);
-        if (dados.length > 0) {
-          setPatioSelecionado((prev) => prev || dados[0].nome);
+        setPatios(listaPatios);
+        if (listaPatios.length > 0) {
+          setPatioSelecionado((prev) => prev || listaPatios[0].nome);
         } else {
           setPatioSelecionado('');
         }
@@ -85,7 +98,7 @@ export default function Formulario({ navigation }) {
         setCarregandoPatios(false);
       }
     }
-  }, [navigation, t]);
+  }, [navigation, t, normalizePatioList]);
 
   useEffect(() => {
     carregarPatios();
@@ -438,6 +451,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: 20,
     paddingBottom: 40,
+    paddingTop: 60,
   },
   title: {
     fontSize: 24,

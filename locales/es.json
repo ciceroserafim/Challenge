@@ -15,7 +15,8 @@
       "fillFields": "Complete todos los campos.",
       "invalidUser": "Usuario inválido o no registrado.",
       "incorrectPassword": "Contraseña incorrecta.",
-      "notificationPermission": "¡Permiso para notificaciones no concedido!"
+      "notificationPermission": "¡Permiso para notificaciones no concedido!",
+      "apiCredentials": "No fue posible configurar las credenciales de la API."
     }
   },
   "register": {
@@ -67,21 +68,68 @@
   "patio": {
     "title": "Motos en el Patio",
     "noMotos": "Aún no hay motos registradas.",
+    "noPatios": "No hay patios registrados por el momento.",
+    "unknownPatio": "Patio no identificado",
     "plate": "Placa",
-    "responsible": "Responsable",
-    "location": "Ubicación",
+    "setor": "Sector",
+    "cor": "Color",
     "edit": "Editar",
     "delete": "Eliminar",
+    "retry": "Intentar nuevamente",
+    "tabs": {
+      "motos": "Motos",
+      "patios": "Patios"
+    },
+    "addMoto": "Agregar nueva moto",
+    "addPatio": "Registrar patio",
+    "createFirstMoto": "Registrar primera moto",
+    "createFirstPatio": "Registrar primer patio",
+    "editMoto": "Editar moto",
+    "createPatio": "Registrar patio",
+    "editPatio": "Editar patio",
+    "update": "Actualizar",
     "confirmDelete": "Confirmar Eliminación",
-    "confirmDeleteMessage": "¿Estás seguro de que deseas eliminar esta moto?",
+    "confirmDeleteMessage": "¿Estás seguro de que deseas eliminar la moto con placa %{plate}?",
+    "confirmDeletePatio": "Eliminar patio",
+    "confirmDeletePatioMessage": "¿Deseas realmente eliminar el patio %{name}?",
     "deleteSuccess": "¡Moto eliminada con éxito!",
     "editSuccess": "¡Moto editada con éxito!",
     "cancel": "Cancelar",
     "save": "Guardar",
+    "fields": {
+      "name": "Nombre del patio",
+      "namePlaceholder": "Ej: Patio Centro",
+      "address": "Dirección",
+      "addressPlaceholder": "Calle, número, barrio y ciudad"
+    },
+    "messages": {
+      "motoUpdated": "¡Moto actualizada con éxito!",
+      "patioCreated": "¡Patio registrado con éxito!",
+      "patioUpdated": "¡Patio actualizado con éxito!",
+      "patioDeleted": "¡Patio eliminado con éxito!"
+    },
     "errors": {
+      "networkTitle": "Fallo de conexión",
+      "network": "No fue posible conectar con la API. Verifica tu conexión a internet.",
+      "authTitle": "Sesión expirada",
+      "authMessage": "Inicia sesión nuevamente para continuar.",
+      "loadMotos": "No fue posible cargar las motos.",
+      "loadPatios": "No fue posible cargar los patios.",
+      "loadMotoDetailTitle": "Error al cargar la moto",
+      "loadMotoDetail": "No fue posible cargar los detalles de la moto seleccionada.",
       "deleteError": "No fue posible eliminar la moto.",
       "updateError": "No fue posible actualizar la moto.",
-      "fillFields": "Complete todos los campos."
+      "fillFields": "Complete todos los campos.",
+      "modelRequired": "Informe el modelo de la moto.",
+      "plateRequired": "Informe la placa de la moto.",
+      "plateFormat": "La placa debe contener 7 caracteres alfanuméricos.",
+      "statusRequired": "Seleccione un estado.",
+      "patioRequired": "Seleccione un patio.",
+      "descriptionRequired": "Informe una descripción.",
+      "nameRequired": "Informe el nombre del patio.",
+      "addressRequired": "Informe la dirección del patio.",
+      "savePatio": "No fue posible guardar el patio.",
+      "deletePatio": "No fue posible eliminar el patio."
     },
     "status": {
       "available": "Disponible",
@@ -94,16 +142,26 @@
     }
   },
   "form": {
+    "title": "Registro de Motos",
     "responsibleName": "Nombre del Responsable",
     "plate": "Placa de la Moto",
     "model": "Modelo de la Moto",
     "location": "Ubicación en el Patio",
     "status": "Estado de la Moto",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Describe la condición, observaciones o historial de la moto.",
+    "patio": "Patio",
     "enterName": "Ingrese el nombre",
     "enterPlate": "Ingrese la placa",
     "enterModel": "Ingrese el modelo",
     "locationPlaceholder": "Ej: Bloque A - Plaza 3",
     "save": "Guardar",
+    "retry": "Intentar nuevamente",
+    "sectorPreview": {
+      "title": "Sector sugerido",
+      "setor": "Sector %{setor}",
+      "color": "Color del sector: %{color}"
+    },
     "statusOptions": {
       "available": "Disponible",
       "reserved": "Reservada",
@@ -115,12 +173,22 @@
     },
     "errors": {
       "fillFields": "Complete todos los campos antes de guardar.",
-      "saveError": "No fue posible guardar la moto."
+      "saveError": "No fue posible guardar la moto.",
+      "authTitle": "Sesión expirada",
+      "authMessage": "Inicia sesión nuevamente para continuar usando la integración con la API.",
+      "loadPatiosGeneric": "No fue posible cargar la lista de patios.",
+      "modelRequired": "Informe el modelo de la moto.",
+      "plateRequired": "Informe la placa de la moto.",
+      "plateFormat": "La placa debe contener 7 caracteres alfanuméricos.",
+      "statusRequired": "Seleccione un estado para la moto.",
+      "patioRequired": "Seleccione un patio.",
+      "descriptionRequired": "Informe una descripción para la moto.",
+      "network": "No fue posible conectar con la API. Verifica tu conexión a internet."
     },
     "success": "¡Moto registrada con éxito!",
     "notification": {
       "title": "🏍️ ¡Nueva moto agregada!",
-      "body": "Modelo: %{model}\nPlaca: %{plate}\nResponsable: %{name}"
+      "body": "Modelo: %{model}\nPlaca: %{plate}\nPatio: %{patio}"
     }
   },
   "profile": {

@@ -4,6 +4,7 @@ import { MotiView, MotiText } from 'moti';
 import { useTheme } from '../context/ThemeContext';
 import { useI18n } from '../context/I18nContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setAuthCredentials } from '../services/api';
 
 export default function Login({ navigation }) {
   const theme = useTheme();
@@ -38,8 +39,18 @@ export default function Login({ navigation }) {
       return;
     }
 
-    await AsyncStorage.setItem('@logado_email', email);
-    navigation.replace('Escolha');
+    try {
+      await setAuthCredentials({ email, password: senha });
+      await AsyncStorage.setItem('@logado_email', email);
+      navigation.replace('Escolha');
+    } catch (error) {
+      console.error('Erro ao configurar credenciais da API:', error);
+      Alert.alert(
+        'Erro',
+        t('login.errors.apiCredentials') ||
+          'Não foi possível configurar as credenciais de acesso à API. Verifique usuário e senha.'
+      );
+    }
   };
 
   return (

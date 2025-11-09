@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Switch, TouchableOpacity, Alert } from 'react-n
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../context/ThemeContext';
 import { useI18n } from '../context/I18nContext';
+import { clearAuthCredentials } from '../services/api';
 
 export default function Configuracao({ navigation }) {
   const { modoEscuro, modoMottu, toggleModoEscuro, toggleModoMottu, colors } = useTheme();
@@ -55,6 +56,7 @@ export default function Configuracao({ navigation }) {
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem('@logado_email');
+      await clearAuthCredentials();
       navigation.replace('Login');
     } catch (error) {
       console.error('Erro ao deslogar:', error);

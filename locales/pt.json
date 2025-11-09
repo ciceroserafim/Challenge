@@ -15,7 +15,8 @@
       "fillFields": "Preencha todos os campos.",
       "invalidUser": "Usuário inválido ou não cadastrado.",
       "incorrectPassword": "Senha incorreta.",
-      "notificationPermission": "Permissão para notificações não concedida!"
+      "notificationPermission": "Permissão para notificações não concedida!",
+      "apiCredentials": "Não foi possível configurar as credenciais da API."
     }
   },
   "register": {
@@ -67,21 +68,68 @@
   "patio": {
     "title": "Motos no Pátio",
     "noMotos": "Nenhuma moto cadastrada ainda.",
+    "noPatios": "Nenhum pátio cadastrado no momento.",
+    "unknownPatio": "Pátio não identificado",
     "plate": "Placa",
-    "responsible": "Responsável",
-    "location": "Localização",
+    "setor": "Setor",
+    "cor": "Cor",
     "edit": "Editar",
     "delete": "Excluir",
+    "retry": "Tentar novamente",
+    "tabs": {
+      "motos": "Motos",
+      "patios": "Pátios"
+    },
+    "addMoto": "Adicionar nova moto",
+    "addPatio": "Cadastrar pátio",
+    "createFirstMoto": "Cadastrar primeira moto",
+    "createFirstPatio": "Cadastrar primeiro pátio",
+    "editMoto": "Editar moto",
+    "createPatio": "Cadastrar pátio",
+    "editPatio": "Editar pátio",
+    "update": "Atualizar",
     "confirmDelete": "Confirmar Exclusão",
-    "confirmDeleteMessage": "Tem certeza que deseja excluir esta moto?",
+    "confirmDeleteMessage": "Tem certeza que deseja excluir a moto com placa %{plate}?",
+    "confirmDeletePatio": "Remover pátio",
+    "confirmDeletePatioMessage": "Você tem certeza que deseja remover o pátio %{name}?",
     "deleteSuccess": "Moto excluída com sucesso!",
     "editSuccess": "Moto editada com sucesso!",
     "cancel": "Cancelar",
     "save": "Salvar",
+    "fields": {
+      "name": "Nome do pátio",
+      "namePlaceholder": "Ex: Pátio Vila Mariana",
+      "address": "Endereço",
+      "addressPlaceholder": "Rua, número, bairro e cidade"
+    },
+    "messages": {
+      "motoUpdated": "Moto atualizada com sucesso!",
+      "patioCreated": "Pátio cadastrado com sucesso!",
+      "patioUpdated": "Pátio atualizado com sucesso!",
+      "patioDeleted": "Pátio removido com sucesso!"
+    },
     "errors": {
+      "networkTitle": "Falha de conexão",
+      "network": "Não foi possível conectar à API. Verifique sua conexão com a internet.",
+      "authTitle": "Sessão expirada",
+      "authMessage": "Faça login novamente para continuar.",
+      "loadMotos": "Não foi possível carregar as motos.",
+      "loadPatios": "Não foi possível carregar os pátios.",
+      "loadMotoDetailTitle": "Erro ao carregar moto",
+      "loadMotoDetail": "Não foi possível carregar os detalhes da moto selecionada.",
       "deleteError": "Não foi possível excluir a moto.",
       "updateError": "Não foi possível atualizar a moto.",
-      "fillFields": "Preencha todos os campos."
+      "fillFields": "Preencha todos os campos.",
+      "modelRequired": "Informe o modelo da moto.",
+      "plateRequired": "Informe a placa da moto.",
+      "plateFormat": "A placa deve conter 7 caracteres alfanuméricos.",
+      "statusRequired": "Selecione um status.",
+      "patioRequired": "Selecione um pátio.",
+      "descriptionRequired": "Informe uma descrição.",
+      "nameRequired": "Informe o nome do pátio.",
+      "addressRequired": "Informe o endereço do pátio.",
+      "savePatio": "Não foi possível salvar o pátio.",
+      "deletePatio": "Não foi possível excluir o pátio."
     },
     "status": {
       "available": "Disponível",
@@ -94,16 +142,26 @@
     }
   },
   "form": {
+    "title": "Cadastro de Motos",
     "responsibleName": "Nome do Responsável",
     "plate": "Placa da Moto",
     "model": "Modelo da Moto",
     "location": "Localização no Pátio",
     "status": "Status da Moto",
+    "description": "Descrição",
+    "descriptionPlaceholder": "Descreva a condição, observações ou histórico da moto.",
+    "patio": "Pátio",
     "enterName": "Digite o nome",
     "enterPlate": "Digite a placa",
     "enterModel": "Digite o modelo",
     "locationPlaceholder": "Ex: Bloco A - Vaga 3",
     "save": "Salvar",
+    "retry": "Tentar novamente",
+    "sectorPreview": {
+      "title": "Setor sugerido",
+      "setor": "Setor %{setor}",
+      "color": "Cor do setor: %{color}"
+    },
     "statusOptions": {
       "available": "Disponível",
       "reserved": "Reservada",
@@ -115,12 +173,22 @@
     },
     "errors": {
       "fillFields": "Preencha todos os campos antes de salvar.",
-      "saveError": "Não foi possível salvar a moto."
+      "saveError": "Não foi possível salvar a moto.",
+      "authTitle": "Sessão expirada",
+      "authMessage": "Faça login novamente para continuar usando a integração com a API.",
+      "loadPatiosGeneric": "Não foi possível carregar a lista de pátios.",
+      "modelRequired": "Informe o modelo da moto.",
+      "plateRequired": "Informe a placa da moto.",
+      "plateFormat": "A placa deve conter 7 caracteres alfanuméricos.",
+      "statusRequired": "Selecione um status para a moto.",
+      "patioRequired": "Selecione um pátio.",
+      "descriptionRequired": "Informe uma descrição para a moto.",
+      "network": "Não foi possível conectar à API. Verifique sua conexão com a internet."
     },
     "success": "Moto cadastrada com sucesso!",
     "notification": {
       "title": "🏍️ Nova moto adicionada!",
-      "body": "Modelo: %{model}\nPlaca: %{plate}\nResponsável: %{name}"
+      "body": "Modelo: %{model}\nPlaca: %{plate}\nPátio: %{patio}"
     }
   },
   "profile": {

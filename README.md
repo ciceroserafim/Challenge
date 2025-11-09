@@ -45,3 +45,4 @@ npm start
 ├── package.json         # Dependências e scripts
 └── README.md            # Documentação do projeto
 ```
+## Link para o video demonstrativo: https://youtu.be/Y4S4IJYvepQ

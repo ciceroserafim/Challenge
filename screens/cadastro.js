@@ -33,7 +33,7 @@ export default function CadastroUsuario({ navigation }) {
       const usuario = { nome, cpf, email, senha };
       await AsyncStorage.setItem(`@usuario_${email}`, JSON.stringify(usuario));
 
-      Alert.alert('Sucesso', t('register.success', { name }));
+      Alert.alert('Sucesso', t('register.success', { name: nome }));
       navigation.navigate('Login');
     } catch (error) {
       console.error(error);

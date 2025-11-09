@@ -16,6 +16,7 @@ import Desenvolvedores from './screens/desenvolvedores';
 import Cadastro from './screens/cadastro';
 import Formulario from './screens/formulario';
 import EsqueciSenha from './screens/EsqueceuSenha';
+import Perfil from './screens/perfil';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +66,7 @@ export default function App() {
             <Stack.Screen name="Escolha" component={Escolha} />
             <Stack.Screen name="Patio" component={Patio} />
             <Stack.Screen name="Formulario" component={Formulario} />
+            <Stack.Screen name="Perfil" component={Perfil} />
             <Stack.Screen name="Configuracao" component={Configuracao} />
             <Stack.Screen name="EsqueciSenha" component={EsqueciSenha} />
             <Stack.Screen

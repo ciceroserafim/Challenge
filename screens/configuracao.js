@@ -9,19 +9,12 @@ export default function Configuracao({ navigation }) {
   const { modoEscuro, modoMottu, toggleModoEscuro, toggleModoMottu, colors } = useTheme();
   const { locale, changeLocale, t } = useI18n();
 
-  const [usuario, setUsuario] = useState(null);
   const [notificacoesAtivadas, setNotificacoesAtivadas] = useState(true);
   const [temaLocal, setTemaLocal] = useState(modoEscuro); // controle local para UI imediata
 
   useEffect(() => {
     const carregarDados = async () => {
       try {
-        const email = await AsyncStorage.getItem('@logado_email');
-        if (email) {
-          const userJSON = await AsyncStorage.getItem(`@usuario_${email}`);
-          if (userJSON) setUsuario(JSON.parse(userJSON));
-        }
-
         // carrega preferências se existirem (compatibilidade com chave que você usa)
         const temaSalvo = await AsyncStorage.getItem('@modo_escuro');
         if (temaSalvo !== null) setTemaLocal(JSON.parse(temaSalvo));
@@ -68,31 +61,6 @@ export default function Configuracao({ navigation }) {
     }
   };
 
-  const handleExcluirConta = () => {
-    Alert.alert(t('settings.confirmDelete'), t('settings.confirmDeleteMessage'), [
-      { text: t('settings.cancel'), style: 'cancel' },
-      {
-        text: t('settings.delete'),
-        style: 'destructive',
-        onPress: async () => {
-          try {
-            const email = await AsyncStorage.getItem('@logado_email');
-            if (email) {
-              await AsyncStorage.removeItem(`@usuario_${email}`);
-              await AsyncStorage.removeItem('@logado_email');
-              Alert.alert(t('settings.accountDeleted'), t('settings.accountDeletedMessage'));
-              navigation.replace('Login');
-            } else {
-              Alert.alert('Erro', t('settings.errors.noUser'));
-            }
-          } catch (error) {
-            console.error('Erro ao excluir conta:', error);
-            Alert.alert('Erro', t('settings.errors.deleteError'));
-          }
-        },
-      },
-    ]);
-  };
 
   const handleChangeLanguage = () => {
     const newLocale = locale === 'pt' ? 'es' : 'pt';
@@ -102,16 +70,6 @@ export default function Configuracao({ navigation }) {
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={[styles.title, { color: colors.text }]}>{t('settings.title')}</Text>
-
-      {usuario ? (
-        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.text }]}>
-          <Text style={[styles.infoText, { color: colors.text }]}>{t('settings.name')}: {usuario.nome}</Text>
-          <Text style={[styles.infoText, { color: colors.text }]}>{t('settings.email')}: {usuario.email}</Text>
-          <Text style={[styles.infoText, { color: colors.text }]}>{t('settings.cpf')}: {usuario.cpf}</Text>
-        </View>
-      ) : (
-        <Text style={{ color: colors.text, marginBottom: 20 }}>{t('settings.loadingUser')}</Text>
-      )}
 
       <View style={[styles.optionRow, { backgroundColor: colors.card, borderColor: colors.text }]}>
         <Text style={[styles.optionText, { color: colors.text }]}>{t('settings.darkMode')}</Text>
@@ -156,10 +114,6 @@ export default function Configuracao({ navigation }) {
       <TouchableOpacity style={[styles.logoutButton, { backgroundColor: colors.logoutButton }]} onPress={handleLogout}>
         <Text style={[styles.logoutButtonText, { color: colors.text }]}>{t('settings.logout')}</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity style={[styles.deleteButton]} onPress={handleExcluirConta}>
-        <Text style={[styles.logoutButtonText]}>{t('settings.deleteAccount')}</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -167,8 +121,6 @@ export default function Configuracao({ navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20 },
   title: { fontSize: 28, fontWeight: 'bold', marginBottom: 20, marginTop: 50, textAlign: 'center' },
-  card: { padding: 15, borderWidth: 1.5, borderRadius: 12, marginBottom: 25 },
-  infoText: { fontSize: 18, marginBottom: 8 },
   optionRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -180,6 +132,5 @@ const styles = StyleSheet.create({
   },
   optionText: { fontSize: 18 },
   logoutButton: { paddingVertical: 15, borderRadius: 12, alignItems: 'center', marginTop: 10 },
-  deleteButton: { paddingVertical: 15, borderRadius: 12, alignItems: 'center', marginTop: 10, backgroundColor: '#FF4C4C' },
   logoutButtonText: { fontSize: 18, fontWeight: 'bold', color: '#fff' },
 });

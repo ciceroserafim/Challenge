@@ -32,7 +32,11 @@
       "invalidCpf": "CPF inválido. Deve conter 11 números.",
       "registerError": "Não foi possível cadastrar o usuário."
     },
-    "success": "Usuário %{name} cadastrado com sucesso!"
+    "success": "Usuário %{name} cadastrado com sucesso!",
+    "notification": {
+      "title": "✅ Cadastro realizado!",
+      "body": "Bem-vindo, %{name}! Seu cadastro foi realizado com sucesso."
+    }
   },
   "forgotPassword": {
     "title": "Recuperar Senha",
@@ -53,10 +57,12 @@
     "form": "📝 Preencher Formulário",
     "developers": "👥 Desenvolvedores",
     "settings": "⚙️ Configurações",
+    "profile": "👤 Perfil",
     "patioDesc": "Gerencie o pátio e visualize as motos.",
     "formDesc": "Adicione novas informações facilmente.",
     "developersDesc": "Conheça quem criou o aplicativo.",
-    "settingsDesc": "Ajuste o tema e preferências do app."
+    "settingsDesc": "Ajuste o tema e preferências do app.",
+    "profileDesc": "Visualize e edite suas informações."
   },
   "patio": {
     "title": "Motos no Pátio",
@@ -64,6 +70,19 @@
     "plate": "Placa",
     "responsible": "Responsável",
     "location": "Localização",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "confirmDelete": "Confirmar Exclusão",
+    "confirmDeleteMessage": "Tem certeza que deseja excluir esta moto?",
+    "deleteSuccess": "Moto excluída com sucesso!",
+    "editSuccess": "Moto editada com sucesso!",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "errors": {
+      "deleteError": "Não foi possível excluir a moto.",
+      "updateError": "Não foi possível atualizar a moto.",
+      "fillFields": "Preencha todos os campos."
+    },
     "status": {
       "available": "Disponível",
       "reserved": "Reservada",
@@ -104,6 +123,29 @@
       "body": "Modelo: %{model}\nPlaca: %{plate}\nResponsável: %{name}"
     }
   },
+  "profile": {
+    "title": "Meu Perfil",
+    "loading": "Carregando perfil...",
+    "edit": "Editar",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir Conta",
+    "optional": "(Opcional - deixe em branco para manter a senha atual)",
+    "confirmDelete": "Confirmar Exclusão",
+    "confirmDeleteMessage": "Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.",
+    "accountDeleted": "Conta excluída",
+    "accountDeletedMessage": "Sua conta foi removida com sucesso.",
+    "success": {
+      "update": "Perfil atualizado com sucesso!"
+    },
+    "errors": {
+      "loadError": "Não foi possível carregar o perfil.",
+      "noUser": "Nenhum usuário logado encontrado.",
+      "updateError": "Não foi possível atualizar o perfil.",
+      "deleteError": "Não foi possível excluir a conta.",
+      "fillFields": "Preencha todos os campos obrigatórios."
+    }
+  },
   "settings": {
     "title": "Configurações",
     "darkMode": "Modo Escuro",
@@ -111,21 +153,8 @@
     "notifications": "Notificações",
     "language": "Idioma",
     "logout": "Sair",
-    "deleteAccount": "Excluir Conta",
-    "loadingUser": "Carregando usuário...",
-    "name": "Nome",
-    "email": "Email",
-    "cpf": "CPF",
-    "confirmDelete": "Confirmação",
-    "confirmDeleteMessage": "Tem certeza que deseja excluir sua conta?",
     "cancel": "Cancelar",
-    "delete": "Excluir",
-    "accountDeleted": "Conta excluída",
-    "accountDeletedMessage": "Sua conta foi removida com sucesso.",
-    "errors": {
-      "noUser": "Nenhum usuário logado encontrado.",
-      "deleteError": "Não foi possível excluir a conta."
-    }
+    "delete": "Excluir"
   },
   "developers": {
     "title": "🏍️ Desenvolvedores do Projeto 💨",

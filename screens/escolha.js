@@ -33,6 +33,7 @@ export default function Escolha({ navigation }) {
   const cards = [
     { label: t('choice.patio'), screen: 'Patio', color: '#4CAF50', desc: t('choice.patioDesc') },
     { label: t('choice.form'), screen: 'Formulario', color: '#388E3C', desc: t('choice.formDesc') },
+    { label: t('choice.profile'), screen: 'Perfil', color: '#2196F3', desc: t('choice.profileDesc') },
     { label: t('choice.developers'), screen: 'Desenvolvedores', color: '#43A047', desc: t('choice.developersDesc') },
     { label: t('choice.settings'), screen: 'Configuracao', color: '#2E7D32', desc: t('choice.settingsDesc') },
   ];

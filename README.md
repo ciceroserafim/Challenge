@@ -1,39 +1,47 @@
-Challenge
+## MotoVision
 
+Aplicativo mobile desenvolvido com **React Native + Expo** para demonstrar a gestão de motos e pátios da empresa parceira **Mottu**, incluindo autenticação, cadastro de veículos, gerenciamento de pátios, perfil do usuário e configurações com suporte a múltiplos temas e idiomas.
+
+## Proposta e funcionalidades
+
+- Login, cadastro e recuperação de senha com armazenamento seguro de credenciais.
+- Dashboard de escolhas com acesso a pátio, formulário, desenvolvedores, configurações e perfil.
+- Gestão de motos e pátios: listagem, criação, edição e exclusão, com status e notificações.
+- Formulário de cadastro de motos com validações e envio de push notification.
+- Configurações com modo escuro, modo Mottu, alternância de idioma (PT/ES) e tela **Sobre o App** exibindo o hash do commit publicado.
+- Perfil do usuário com edição de dados pessoais e gerenciamento de conta.
 
 ## Integrantes
 
-- **Cícero Gabriel Oliveira Serafim** – RM556996  
-- **Eduardo Miguel Forato Monteiro** – RM555871  
-- **Murillo Ari Sant'Anna** – RM557183
-
-
-Estamos desenvolvendo um **projeto mobile em React Native com Expo**, voltado para apresentação à empresa **Mottu**.  
-O objetivo é acompanhar e validar o **ciclo de desenvolvimento do aplicativo** por meio de **sprints organizadas**, garantindo evolução contínua, entregas incrementais e alinhamento com as necessidades do negócio.
+- **Cícero Gabriel Oliveira Serafim** – RM556996 – [github.com/ciceroserafim](https://github.com/ciceroserafim)  
+- **Eduardo Miguel Forato Monteiro** – RM555871 – [github.com/EduardoMiguelM](https://github.com/EduardoMiguelM)  
+- **Murillo Ari Sant'Anna** – RM557183 – [github.com/murillosantanna](https://github.com/murillosantanna)
 
 ## Como rodar o projeto
 
-1. Clone o repositório:
 ```bash
-https://github.com/ciceroserafim/Challenge.git
-
-
-2. abrir o cmd cd PastaEspecifica\Challenge-main
+git clone https://github.com/ciceroserafim/Challenge.git
+cd Challenge
 npm install
 npm start
-para rodar o emulador só apertar a tecla A
+```
 
+- No Expo Go ou emulador Android, leia o QR Code ou pressione `a` no terminal para abrir no emulador configurado.
 
-## Estruturas de pastas
+## Estrutura de pastas
 
-├── .expo/ # Configurações geradas automaticamente pelo Expo
-├── context/ # Context API (gerenciamento de estado e temas globais)
-├── images/ # Imagens e ícones utilizados no app
-├── node_modules/ # Dependências do projeto (gerenciadas pelo npm/yarn)
-├── screens/ # Telas principais da aplicação
-├── App.js # Arquivo principal do aplicativo
-├── app.json # Configurações do projeto Expo
-├── index.js # Ponto de entrada da aplicação
-├── package.json # Dependências e scripts do projeto
-├── package-lock.json # Controle de versão exata das dependências
-└── README.md # Documentação do projeto
+```
+├── assets/              # Ícones, splash e imagens estáticas
+├── context/             # Providers de tema e internacionalização
+├── images/              # Fotos dos integrantes
+├── locales/             # Arquivos de tradução (pt/es)
+├── screens/             # Telas principais (login, pátio, formulário, etc.)
+├── services/            # Integração com API e autenticação
+├── utils/               # Utilitários (ex: notificações)
+├── App.js               # Entrada do app com navegação e providers
+├── app.json             # Configurações Expo (metadados, splash, ícones)
+├── commit-info.json     # Hash de commit usado na build publicada
+├── eas.json             # Perfis de build EAS
+├── package.json         # Dependências e scripts
+└── README.md            # Documentação do projeto
+```

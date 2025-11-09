@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../context/ThemeContext';
 import { useI18n } from '../context/I18nContext';
 import { MotiText, MotiView } from 'moti';
+import { registrarNotificacoes, enviarNotificacaoLocal } from '../utils/notifications';
 
 export default function CadastroUsuario({ navigation }) {
   const theme = useTheme();
@@ -13,6 +14,14 @@ export default function CadastroUsuario({ navigation }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+
+  // Garante que as permissões de notificação estão ativas
+  useEffect(() => {
+    const verificarPermissoes = async () => {
+      await registrarNotificacoes();
+    };
+    verificarPermissoes();
+  }, []);
 
   const handleCadastro = async () => {
     if (!nome || !cpf || !email || !senha || !confirmarSenha) {
@@ -32,6 +41,17 @@ export default function CadastroUsuario({ navigation }) {
       // Salva o usuário localmente
       const usuario = { nome, cpf, email, senha };
       await AsyncStorage.setItem(`@usuario_${email}`, JSON.stringify(usuario));
+
+      // Envia notificação de cadastro bem-sucedido
+      try {
+        await enviarNotificacaoLocal(
+          t('register.notification.title'),
+          t('register.notification.body', { name: nome })
+        );
+      } catch (notifError) {
+        console.log('Erro ao enviar notificação:', notifError);
+        // Continua mesmo se a notificação falhar
+      }
 
       Alert.alert('Sucesso', t('register.success', { name: nome }));
       navigation.navigate('Login');

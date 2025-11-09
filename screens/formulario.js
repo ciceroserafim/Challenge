@@ -3,7 +3,7 @@ import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert } from 'reac
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../context/ThemeContext';
 import { useI18n } from '../context/I18nContext';
-import { registrarNotificacoes, enviarNotificacaoPush } from '../utils/notifications';
+import { registrarNotificacoes, enviarNotificacaoLocal } from '../utils/notifications';
 
 export default function Formulario({ navigation }) {
   const theme = useTheme();
@@ -13,7 +13,6 @@ export default function Formulario({ navigation }) {
   const [modelo, setModelo] = useState('');
   const [localizacao, setLocalizacao] = useState('');
   const [status, setStatus] = useState('');
-  const [expoToken, setExpoToken] = useState(null);
 
   const statusOptions = [
     { label: t('form.statusOptions.available'), value: 'DISPONIVEL', color: '#4CAF50' },
@@ -25,17 +24,12 @@ export default function Formulario({ navigation }) {
     { label: t('form.statusOptions.missingPart'), value: 'FALTA_PECA', color: '#a91afcff' },
   ];
 
-  // 🟢 Registrar token push ao abrir o formulário
+  // Garante que as permissões de notificação estão ativas
   useEffect(() => {
-    const registrarToken = async () => {
-      let token = await AsyncStorage.getItem('@expo_push_token');
-      if (!token) {
-        token = await registrarNotificacoes();
-        if (token) await AsyncStorage.setItem('@expo_push_token', token);
-      }
-      setExpoToken(token);
+    const verificarPermissoes = async () => {
+      await registrarNotificacoes();
     };
-    registrarToken();
+    verificarPermissoes();
   }, []);
 
   const handleSalvar = async () => {
@@ -59,13 +53,15 @@ export default function Formulario({ navigation }) {
       const novaLista = [...lista, novaMoto];
       await AsyncStorage.setItem('@motos', JSON.stringify(novaLista));
 
-      // ✅ Enviar push real
-      if (expoToken) {
-        await enviarNotificacaoPush(
-          expoToken,
+      // Envia notificação de moto cadastrada com sucesso
+      try {
+        await enviarNotificacaoLocal(
           t('form.notification.title'),
           t('form.notification.body', { model: modelo, plate: placa, name: nome })
         );
+      } catch (notifError) {
+        console.log('Erro ao enviar notificação:', notifError);
+        // Continua mesmo se a notificação falhar
       }
 
       Alert.alert('Sucesso', t('form.success'));

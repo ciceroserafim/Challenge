@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../context/ThemeContext';
+import { useI18n } from '../context/I18nContext';
 import { MotiText, MotiView } from 'moti';
 
 export default function CadastroUsuario({ navigation }) {
   const theme = useTheme();
+  const { t } = useI18n();
   const [nome, setNome] = useState('');
   const [cpf, setCpf] = useState('');
   const [email, setEmail] = useState('');
@@ -14,15 +16,15 @@ export default function CadastroUsuario({ navigation }) {
 
   const handleCadastro = async () => {
     if (!nome || !cpf || !email || !senha || !confirmarSenha) {
-      Alert.alert('Erro', 'Preencha todos os campos!');
+      Alert.alert('Erro', t('register.errors.fillFields'));
       return;
     }
     if (senha !== confirmarSenha) {
-      Alert.alert('Erro', 'As senhas não coincidem!');
+      Alert.alert('Erro', t('register.errors.passwordsNoMatch'));
       return;
     }
     if (cpf.length !== 11 || isNaN(Number(cpf))) {
-      Alert.alert('Erro', 'CPF inválido. Deve conter 11 números.');
+      Alert.alert('Erro', t('register.errors.invalidCpf'));
       return;
     }
 
@@ -31,11 +33,11 @@ export default function CadastroUsuario({ navigation }) {
       const usuario = { nome, cpf, email, senha };
       await AsyncStorage.setItem(`@usuario_${email}`, JSON.stringify(usuario));
 
-      Alert.alert('Sucesso', `Usuário ${nome} cadastrado com sucesso!`);
+      Alert.alert('Sucesso', t('register.success', { name }));
       navigation.navigate('Login');
     } catch (error) {
       console.error(error);
-      Alert.alert('Erro', 'Não foi possível cadastrar o usuário.');
+      Alert.alert('Erro', t('register.errors.registerError'));
     }
   };
 
@@ -54,20 +56,20 @@ export default function CadastroUsuario({ navigation }) {
         transition={{ type: 'timing', duration: 800 }}
         style={[styles.title, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}
       >
-        Cadastro de Usuário
+        {t('register.title')}
       </MotiText>
 
       <MotiView from={{ opacity: 0, translateY: 50 }} animate={{ opacity: 1, translateY: 0 }} transition={{ type: 'timing', duration: 1000, delay: 300 }}>
-        <TextInput placeholder="Nome" style={inputStyle} placeholderTextColor={placeholderColor} value={nome} onChangeText={setNome} />
-        <TextInput placeholder="CPF" style={inputStyle} placeholderTextColor={placeholderColor} value={cpf} onChangeText={setCpf} keyboardType="numeric" maxLength={11} />
-        <TextInput placeholder="Email" style={inputStyle} placeholderTextColor={placeholderColor} value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" />
-        <TextInput placeholder="Senha" style={inputStyle} placeholderTextColor={placeholderColor} value={senha} onChangeText={setSenha} secureTextEntry />
-        <TextInput placeholder="Confirmar Senha" style={inputStyle} placeholderTextColor={placeholderColor} value={confirmarSenha} onChangeText={setConfirmarSenha} secureTextEntry />
+        <TextInput placeholder={t('register.name')} style={inputStyle} placeholderTextColor={placeholderColor} value={nome} onChangeText={setNome} />
+        <TextInput placeholder={t('register.cpf')} style={inputStyle} placeholderTextColor={placeholderColor} value={cpf} onChangeText={setCpf} keyboardType="numeric" maxLength={11} />
+        <TextInput placeholder={t('register.email')} style={inputStyle} placeholderTextColor={placeholderColor} value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" />
+        <TextInput placeholder={t('register.password')} style={inputStyle} placeholderTextColor={placeholderColor} value={senha} onChangeText={setSenha} secureTextEntry />
+        <TextInput placeholder={t('register.confirmPassword')} style={inputStyle} placeholderTextColor={placeholderColor} value={confirmarSenha} onChangeText={setConfirmarSenha} secureTextEntry />
       </MotiView>
 
       <MotiView from={{ scale: 1 }} animate={{ scale: 1.05 }} transition={{ loop: true, type: 'timing', duration: 2000 }}>
         <TouchableOpacity style={[styles.button, { backgroundColor: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]} onPress={handleCadastro} activeOpacity={0.8}>
-          <Text style={styles.buttonText}>Cadastrar</Text>
+          <Text style={styles.buttonText}>{t('register.register')}</Text>
         </TouchableOpacity>
       </MotiView>
     </View>

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../context/ThemeContext';
+import { useI18n } from '../context/I18nContext';
 
 export default function Patio() {
   const theme = useTheme();
+  const { t } = useI18n();
   const [motos, setMotos] = useState([]);
 
   const statusColors = {
@@ -15,6 +17,19 @@ export default function Patio() {
     INDISPONIVEL: '#9E9E9E',
     DANOS_ESTRUTURAIS: '#F44336',
     SINISTRO: '#000',
+  };
+
+  const getStatusTranslation = (status) => {
+    const translations = {
+      DISPONIVEL: t('patio.status.available'),
+      RESERVADA: t('patio.status.reserved'),
+      MANUTENCAO: t('patio.status.maintenance'),
+      FALTA_PECA: t('patio.status.missingPart'),
+      INDISPONIVEL: t('patio.status.unavailable'),
+      DANOS_ESTRUTURAIS: t('patio.status.structuralDamage'),
+      SINISTRO: t('patio.status.accident'),
+    };
+    return translations[status] || status;
   };
 
   useEffect(() => {
@@ -33,16 +48,17 @@ export default function Patio() {
     const statusColor = statusColors[item.status] || '#9E9E9E';
     const cardBackground = theme.modoEscuro ? '#444' : '#f9f9f9';
     const textColor = theme.modoEscuro ? '#fff' : '#222';
+    const statusText = getStatusTranslation(item.status);
 
     return (
       <View style={[styles.card, { backgroundColor: cardBackground, borderLeftColor: statusColor }]}>
         <Text style={[styles.text, { color: textColor, fontWeight: 'bold' }]}>{item.modelo}</Text>
-        <Text style={[styles.text, { color: textColor }]}>Placa: {item.placa}</Text>
-        <Text style={[styles.text, { color: textColor }]}>Responsável: {item.nome}</Text>
-        <Text style={[styles.text, { color: textColor }]}>Localização: {item.localizacao}</Text>
+        <Text style={[styles.text, { color: textColor }]}>{t('patio.plate')}: {item.placa}</Text>
+        <Text style={[styles.text, { color: textColor }]}>{t('patio.responsible')}: {item.nome}</Text>
+        <Text style={[styles.text, { color: textColor }]}>{t('patio.location')}: {item.localizacao}</Text>
 
         <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
-          <Text style={styles.statusText}>{item.status.replace('_', ' ')}</Text>
+          <Text style={styles.statusText}>{statusText}</Text>
         </View>
       </View>
     );
@@ -53,10 +69,10 @@ export default function Patio() {
 
   return (
     <View style={[styles.container, { backgroundColor: containerBg }]}>
-      <Text style={[styles.title, { color: titleColor }]}>Motos no Pátio</Text>
+      <Text style={[styles.title, { color: titleColor }]}>{t('patio.title')}</Text>
       {motos.length === 0 ? (
         <Text style={[styles.text, { color: titleColor, textAlign: 'center', marginTop: 20 }]}>
-          Nenhuma moto cadastrada ainda.
+          {t('patio.noMotos')}
         </Text>
       ) : (
         <FlatList

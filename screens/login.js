@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { MotiView, MotiText } from 'moti';
 import { useTheme } from '../context/ThemeContext';
+import { useI18n } from '../context/I18nContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
   const theme = useTheme();
+  const { t } = useI18n();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
@@ -20,19 +22,19 @@ export default function Login({ navigation }) {
 
   const handleLogin = async () => {
     if (!email.trim() || !senha.trim()) {
-      Alert.alert('Erro', 'Preencha todos os campos.');
+      Alert.alert('Erro', t('login.errors.fillFields'));
       return;
     }
 
     const usuarioJSON = await AsyncStorage.getItem(`@usuario_${email}`);
     if (!usuarioJSON) {
-      Alert.alert('Erro', 'Usuário inválido ou não cadastrado.');
+      Alert.alert('Erro', t('login.errors.invalidUser'));
       return;
     }
 
     const usuario = JSON.parse(usuarioJSON);
     if (usuario.senha !== senha) {
-      Alert.alert('Erro', 'Senha incorreta.');
+      Alert.alert('Erro', t('login.errors.incorrectPassword'));
       return;
     }
 
@@ -49,13 +51,13 @@ export default function Login({ navigation }) {
           transition={{ loop: true, type: 'timing', duration: 1600 }}
           style={[styles.title, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}
         >
-          Bem-vindo!
+          {t('login.title')}
         </MotiText>
       </MotiView>
 
       <TextInput
         style={[styles.input, { borderColor: theme.modoEscuro ? '#00FF7F' : '#2E7D32', color: theme.modoEscuro ? '#fff' : '#222', backgroundColor: theme.modoEscuro ? '#1E1E1E' : '#fff' }]}
-        placeholder="Email"
+        placeholder={t('login.email')}
         placeholderTextColor={theme.modoEscuro ? '#aaa' : '#888'}
         value={email}
         onChangeText={setEmail}
@@ -64,7 +66,7 @@ export default function Login({ navigation }) {
       />
       <TextInput
         style={[styles.input, { borderColor: theme.modoEscuro ? '#00FF7F' : '#2E7D32', color: theme.modoEscuro ? '#fff' : '#222', backgroundColor: theme.modoEscuro ? '#1E1E1E' : '#fff' }]}
-        placeholder="Senha"
+        placeholder={t('login.password')}
         secureTextEntry
         placeholderTextColor={theme.modoEscuro ? '#aaa' : '#888'}
         value={senha}
@@ -72,15 +74,15 @@ export default function Login({ navigation }) {
       />
 
       <TouchableOpacity style={[styles.button, { backgroundColor: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Entrar</Text>
+        <Text style={styles.buttonText}>{t('login.login')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('EsqueciSenha')}>
-        <Text style={[styles.link, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}>Esqueceu a senha?</Text>
+        <Text style={[styles.link, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}>{t('login.forgotPassword')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
-        <Text style={[styles.link, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}>Não tem cadastro? Cadastre-se aqui</Text>
+        <Text style={[styles.link, { color: theme.modoEscuro ? '#00FF7F' : '#2E7D32' }]}>{t('login.noAccount')}</Text>
       </TouchableOpacity>
     </View>
   );

@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MotiView, MotiText } from 'moti';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../context/ThemeContext';
+import { useI18n } from '../context/I18nContext';
 
 export default function Primeira({ navigation }) {
   const theme = useTheme();
+  const { t } = useI18n();
   const handleComecar = () => {
     navigation.navigate('Login');
   };
@@ -34,7 +36,7 @@ export default function Primeira({ navigation }) {
         transition={{ type: 'timing', duration: 900 }}
         style={[styles.title, { color: '#084c24' }]}
       >
-        Bem-vindo ao App da Mottu
+        {t('welcome.title')}
       </MotiText>
 
       {/* Descrição animada */}
@@ -44,7 +46,7 @@ export default function Primeira({ navigation }) {
         transition={{ type: 'timing', duration: 1000, delay: 300 }}
         style={[styles.description, { color: '#0c5e2c' }]}
       >
-        Este é um aplicativo de demonstração com funcionalidades como login, pátio, formulário e configurações.
+        {t('welcome.description')}
       </MotiText>
 
       {/* Botão com efeito pulse */}
@@ -67,7 +69,7 @@ export default function Primeira({ navigation }) {
             style={styles.button}
             onPress={handleComecar}
           >
-            <Text style={styles.buttonText}>Começar</Text>
+            <Text style={styles.buttonText}>{t('welcome.start')}</Text>
           </TouchableOpacity>
         </MotiView>
       </MotiView>

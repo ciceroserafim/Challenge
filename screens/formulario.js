@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../context/ThemeContext';
+import { useI18n } from '../context/I18nContext';
 import { registrarNotificacoes, enviarNotificacaoPush } from '../utils/notifications';
 
 export default function Formulario({ navigation }) {
   const theme = useTheme();
+  const { t } = useI18n();
   const [nome, setNome] = useState('');
   const [placa, setPlaca] = useState('');
   const [modelo, setModelo] = useState('');
@@ -14,13 +16,13 @@ export default function Formulario({ navigation }) {
   const [expoToken, setExpoToken] = useState(null);
 
   const statusOptions = [
-    { label: 'Disponível', value: 'DISPONIVEL', color: '#4CAF50' },
-    { label: 'Reservada', value: 'RESERVADA', color: '#005ca7ff' },
-    { label: 'Manutenção', value: 'MANUTENCAO', color: '#FFEB3B' },
-    { label: 'Com danos estruturais', value: 'DANOS_ESTRUTURAIS', color: '#F44336' },
-    { label: 'Indisponível', value: 'INDISPONIVEL', color: '#9E9E9E' },
-    { label: 'Sinistro', value: 'SINISTRO', color: '#000' },
-    { label: 'Falta de peça', value: 'FALTA_PECA', color: '#a91afcff' },
+    { label: t('form.statusOptions.available'), value: 'DISPONIVEL', color: '#4CAF50' },
+    { label: t('form.statusOptions.reserved'), value: 'RESERVADA', color: '#005ca7ff' },
+    { label: t('form.statusOptions.maintenance'), value: 'MANUTENCAO', color: '#FFEB3B' },
+    { label: t('form.statusOptions.structuralDamage'), value: 'DANOS_ESTRUTURAIS', color: '#F44336' },
+    { label: t('form.statusOptions.unavailable'), value: 'INDISPONIVEL', color: '#9E9E9E' },
+    { label: t('form.statusOptions.accident'), value: 'SINISTRO', color: '#000' },
+    { label: t('form.statusOptions.missingPart'), value: 'FALTA_PECA', color: '#a91afcff' },
   ];
 
   // 🟢 Registrar token push ao abrir o formulário
@@ -38,7 +40,7 @@ export default function Formulario({ navigation }) {
 
   const handleSalvar = async () => {
     if (!nome || !placa || !modelo || !localizacao || !status) {
-      Alert.alert('Erro', 'Preencha todos os campos antes de salvar.');
+      Alert.alert('Erro', t('form.errors.fillFields'));
       return;
     }
 
@@ -61,12 +63,12 @@ export default function Formulario({ navigation }) {
       if (expoToken) {
         await enviarNotificacaoPush(
           expoToken,
-          '🏍️ Nova moto adicionada!',
-          `Modelo: ${modelo}\nPlaca: ${placa}\nResponsável: ${nome}`
+          t('form.notification.title'),
+          t('form.notification.body', { model: modelo, plate: placa, name: nome })
         );
       }
 
-      Alert.alert('Sucesso', 'Moto cadastrada com sucesso!');
+      Alert.alert('Sucesso', t('form.success'));
       setNome('');
       setPlaca('');
       setModelo('');
@@ -75,49 +77,49 @@ export default function Formulario({ navigation }) {
       navigation.navigate('Patio');
     } catch (error) {
       console.error(error);
-      Alert.alert('Erro', 'Não foi possível salvar a moto.');
+      Alert.alert('Erro', t('form.errors.saveError'));
     }
   };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.modoEscuro ? '#333' : '#fff' }]}>
-      <Text style={[styles.label, { color: theme.modoEscuro ? '#fff' : '#000' }]}>Nome do Responsável</Text>
+      <Text style={[styles.label, { color: theme.modoEscuro ? '#fff' : '#000' }]}>{t('form.responsibleName')}</Text>
       <TextInput
         style={[styles.input, { backgroundColor: theme.modoEscuro ? '#555' : '#f2f2f2' }]}
         value={nome}
         onChangeText={setNome}
-        placeholder="Digite o nome"
+        placeholder={t('form.enterName')}
         placeholderTextColor={theme.modoEscuro ? '#ccc' : '#999'}
       />
 
-      <Text style={[styles.label, { color: theme.modoEscuro ? '#fff' : '#000' }]}>Placa da Moto</Text>
+      <Text style={[styles.label, { color: theme.modoEscuro ? '#fff' : '#000' }]}>{t('form.plate')}</Text>
       <TextInput
         style={[styles.input, { backgroundColor: theme.modoEscuro ? '#555' : '#f2f2f2' }]}
         value={placa}
         onChangeText={setPlaca}
-        placeholder="Digite a placa"
+        placeholder={t('form.enterPlate')}
         placeholderTextColor={theme.modoEscuro ? '#ccc' : '#999'}
       />
 
-      <Text style={[styles.label, { color: theme.modoEscuro ? '#fff' : '#000' }]}>Modelo da Moto</Text>
+      <Text style={[styles.label, { color: theme.modoEscuro ? '#fff' : '#000' }]}>{t('form.model')}</Text>
       <TextInput
         style={[styles.input, { backgroundColor: theme.modoEscuro ? '#555' : '#f2f2f2' }]}
         value={modelo}
         onChangeText={setModelo}
-        placeholder="Digite o modelo"
+        placeholder={t('form.enterModel')}
         placeholderTextColor={theme.modoEscuro ? '#ccc' : '#999'}
       />
 
-      <Text style={[styles.label, { color: theme.modoEscuro ? '#fff' : '#000' }]}>Localização no Pátio</Text>
+      <Text style={[styles.label, { color: theme.modoEscuro ? '#fff' : '#000' }]}>{t('form.location')}</Text>
       <TextInput
         style={[styles.input, { backgroundColor: theme.modoEscuro ? '#555' : '#f2f2f2' }]}
         value={localizacao}
         onChangeText={setLocalizacao}
-        placeholder="Ex: Bloco A - Vaga 3"
+        placeholder={t('form.locationPlaceholder')}
         placeholderTextColor={theme.modoEscuro ? '#ccc' : '#999'}
       />
 
-      <Text style={[styles.label, { color: theme.modoEscuro ? '#fff' : '#000' }]}>Status da Moto</Text>
+      <Text style={[styles.label, { color: theme.modoEscuro ? '#fff' : '#000' }]}>{t('form.status')}</Text>
       <View style={styles.statusContainer}>
         {statusOptions.map(option => (
           <TouchableOpacity
@@ -136,7 +138,7 @@ export default function Formulario({ navigation }) {
       </View>
 
       <TouchableOpacity style={styles.button} onPress={handleSalvar}>
-        <Text style={styles.buttonText}>Salvar</Text>
+        <Text style={styles.buttonText}>{t('form.save')}</Text>
       </TouchableOpacity>
     </View>
   );

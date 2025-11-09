@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
+import { useI18n } from '../context/I18nContext';
 
 const desenvolvedores = [
   { id: '1', nome: 'Cicero Serafim', rm: '556996', foto: require('../images/cicero.jpeg') },
@@ -10,6 +11,7 @@ const desenvolvedores = [
 
 export default function Desenvolvedores() {
   const theme = useTheme();
+  const { t } = useI18n();
 
   return (
     <View style={[styles.container, { backgroundColor: theme.modoEscuro ? '#222' : '#fefefe' }]}>
@@ -24,7 +26,7 @@ export default function Desenvolvedores() {
           },
         ]}
       >
-        🏍️ Desenvolvedores do Projeto 💨
+        {t('developers.title')}
       </Text>
 
       <FlatList
@@ -47,7 +49,7 @@ export default function Desenvolvedores() {
                 {item.nome}
               </Text>
               <Text style={[styles.rm, { color: theme.modoEscuro ? '#ccc' : '#555' }]}>
-                RM: {item.rm}
+                {t('developers.rm')}: {item.rm}
               </Text>
             </View>
           </View>

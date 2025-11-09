@@ -1,0 +1,135 @@
+{
+  "welcome": {
+    "title": "Bem-vindo ao App da Mottu",
+    "description": "Este é um aplicativo de demonstração com funcionalidades como login, pátio, formulário e configurações.",
+    "start": "Começar"
+  },
+  "login": {
+    "title": "Bem-vindo!",
+    "email": "Email",
+    "password": "Senha",
+    "login": "Entrar",
+    "forgotPassword": "Esqueceu a senha?",
+    "noAccount": "Não tem cadastro? Cadastre-se aqui",
+    "errors": {
+      "fillFields": "Preencha todos os campos.",
+      "invalidUser": "Usuário inválido ou não cadastrado.",
+      "incorrectPassword": "Senha incorreta.",
+      "notificationPermission": "Permissão para notificações não concedida!"
+    }
+  },
+  "register": {
+    "title": "Cadastro de Usuário",
+    "name": "Nome",
+    "cpf": "CPF",
+    "email": "Email",
+    "password": "Senha",
+    "confirmPassword": "Confirmar Senha",
+    "register": "Cadastrar",
+    "errors": {
+      "fillFields": "Preencha todos os campos!",
+      "passwordsNoMatch": "As senhas não coincidem!",
+      "invalidCpf": "CPF inválido. Deve conter 11 números.",
+      "registerError": "Não foi possível cadastrar o usuário."
+    },
+    "success": "Usuário %{name} cadastrado com sucesso!"
+  },
+  "forgotPassword": {
+    "title": "Recuperar Senha",
+    "email": "Digite seu e-mail",
+    "send": "Enviar",
+    "errors": {
+      "fillEmail": "Por favor, preencha o e-mail.",
+      "emailNotRegistered": "E-mail não cadastrado.",
+      "recoveryError": "Não foi possível recuperar a senha."
+    },
+    "recoveryTitle": "Recuperação de Senha",
+    "recoveryMessage": "Sua senha cadastrada é: %{password}"
+  },
+  "choice": {
+    "title": "Escolha uma Opção",
+    "subtitle": "Navegue pelas seções do aplicativo",
+    "patio": "📍 Ir para Pátio",
+    "form": "📝 Preencher Formulário",
+    "developers": "👥 Desenvolvedores",
+    "settings": "⚙️ Configurações",
+    "patioDesc": "Gerencie o pátio e visualize as motos.",
+    "formDesc": "Adicione novas informações facilmente.",
+    "developersDesc": "Conheça quem criou o aplicativo.",
+    "settingsDesc": "Ajuste o tema e preferências do app."
+  },
+  "patio": {
+    "title": "Motos no Pátio",
+    "noMotos": "Nenhuma moto cadastrada ainda.",
+    "plate": "Placa",
+    "responsible": "Responsável",
+    "location": "Localização",
+    "status": {
+      "available": "Disponível",
+      "reserved": "Reservada",
+      "maintenance": "Manutenção",
+      "structuralDamage": "Danos estruturais",
+      "unavailable": "Indisponível",
+      "accident": "Sinistro",
+      "missingPart": "Falta de peça"
+    }
+  },
+  "form": {
+    "responsibleName": "Nome do Responsável",
+    "plate": "Placa da Moto",
+    "model": "Modelo da Moto",
+    "location": "Localização no Pátio",
+    "status": "Status da Moto",
+    "enterName": "Digite o nome",
+    "enterPlate": "Digite a placa",
+    "enterModel": "Digite o modelo",
+    "locationPlaceholder": "Ex: Bloco A - Vaga 3",
+    "save": "Salvar",
+    "statusOptions": {
+      "available": "Disponível",
+      "reserved": "Reservada",
+      "maintenance": "Manutenção",
+      "structuralDamage": "Com danos estruturais",
+      "unavailable": "Indisponível",
+      "accident": "Sinistro",
+      "missingPart": "Falta de peça"
+    },
+    "errors": {
+      "fillFields": "Preencha todos os campos antes de salvar.",
+      "saveError": "Não foi possível salvar a moto."
+    },
+    "success": "Moto cadastrada com sucesso!",
+    "notification": {
+      "title": "🏍️ Nova moto adicionada!",
+      "body": "Modelo: %{model}\nPlaca: %{plate}\nResponsável: %{name}"
+    }
+  },
+  "settings": {
+    "title": "Configurações",
+    "darkMode": "Modo Escuro",
+    "mottuMode": "Modo Mottu",
+    "notifications": "Notificações",
+    "language": "Idioma",
+    "logout": "Sair",
+    "deleteAccount": "Excluir Conta",
+    "loadingUser": "Carregando usuário...",
+    "name": "Nome",
+    "email": "Email",
+    "cpf": "CPF",
+    "confirmDelete": "Confirmação",
+    "confirmDeleteMessage": "Tem certeza que deseja excluir sua conta?",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "accountDeleted": "Conta excluída",
+    "accountDeletedMessage": "Sua conta foi removida com sucesso.",
+    "errors": {
+      "noUser": "Nenhum usuário logado encontrado.",
+      "deleteError": "Não foi possível excluir a conta."
+    }
+  },
+  "developers": {
+    "title": "🏍️ Desenvolvedores do Projeto 💨",
+    "rm": "RM"
+  }
+}
+

@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Switch, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../context/ThemeContext';
+import { useI18n } from '../context/I18nContext';
 
 export default function Configuracao({ navigation }) {
   const { modoEscuro, modoMottu, toggleModoEscuro, toggleModoMottu, colors } = useTheme();
+  const { locale, changeLocale, t } = useI18n();
 
   const [usuario, setUsuario] = useState(null);
   const [notificacoesAtivadas, setNotificacoesAtivadas] = useState(true);
@@ -67,10 +69,10 @@ export default function Configuracao({ navigation }) {
   };
 
   const handleExcluirConta = () => {
-    Alert.alert('Confirmação', 'Tem certeza que deseja excluir sua conta?', [
-      { text: 'Cancelar', style: 'cancel' },
+    Alert.alert(t('settings.confirmDelete'), t('settings.confirmDeleteMessage'), [
+      { text: t('settings.cancel'), style: 'cancel' },
       {
-        text: 'Excluir',
+        text: t('settings.delete'),
         style: 'destructive',
         onPress: async () => {
           try {
@@ -78,36 +80,41 @@ export default function Configuracao({ navigation }) {
             if (email) {
               await AsyncStorage.removeItem(`@usuario_${email}`);
               await AsyncStorage.removeItem('@logado_email');
-              Alert.alert('Conta excluída', 'Sua conta foi removida com sucesso.');
+              Alert.alert(t('settings.accountDeleted'), t('settings.accountDeletedMessage'));
               navigation.replace('Login');
             } else {
-              Alert.alert('Erro', 'Nenhum usuário logado encontrado.');
+              Alert.alert('Erro', t('settings.errors.noUser'));
             }
           } catch (error) {
             console.error('Erro ao excluir conta:', error);
-            Alert.alert('Erro', 'Não foi possível excluir a conta.');
+            Alert.alert('Erro', t('settings.errors.deleteError'));
           }
         },
       },
     ]);
   };
 
+  const handleChangeLanguage = () => {
+    const newLocale = locale === 'pt' ? 'es' : 'pt';
+    changeLocale(newLocale);
+  };
+
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, { color: colors.text }]}>Configurações</Text>
+      <Text style={[styles.title, { color: colors.text }]}>{t('settings.title')}</Text>
 
       {usuario ? (
         <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.text }]}>
-          <Text style={[styles.infoText, { color: colors.text }]}>Nome: {usuario.nome}</Text>
-          <Text style={[styles.infoText, { color: colors.text }]}>Email: {usuario.email}</Text>
-          <Text style={[styles.infoText, { color: colors.text }]}>CPF: {usuario.cpf}</Text>
+          <Text style={[styles.infoText, { color: colors.text }]}>{t('settings.name')}: {usuario.nome}</Text>
+          <Text style={[styles.infoText, { color: colors.text }]}>{t('settings.email')}: {usuario.email}</Text>
+          <Text style={[styles.infoText, { color: colors.text }]}>{t('settings.cpf')}: {usuario.cpf}</Text>
         </View>
       ) : (
-        <Text style={{ color: colors.text, marginBottom: 20 }}>Carregando usuário...</Text>
+        <Text style={{ color: colors.text, marginBottom: 20 }}>{t('settings.loadingUser')}</Text>
       )}
 
       <View style={[styles.optionRow, { backgroundColor: colors.card, borderColor: colors.text }]}>
-        <Text style={[styles.optionText, { color: colors.text }]}>Modo Escuro</Text>
+        <Text style={[styles.optionText, { color: colors.text }]}>{t('settings.darkMode')}</Text>
         <Switch
           value={temaLocal}
           onValueChange={alternarTema}
@@ -117,7 +124,7 @@ export default function Configuracao({ navigation }) {
       </View>
 
       <View style={[styles.optionRow, { backgroundColor: colors.card, borderColor: colors.text }]}>
-        <Text style={[styles.optionText, { color: colors.text }]}>Modo Mottu</Text>
+        <Text style={[styles.optionText, { color: colors.text }]}>{t('settings.mottuMode')}</Text>
         <Switch
           value={modoMottu}
           onValueChange={alternarModoMottu}
@@ -127,7 +134,7 @@ export default function Configuracao({ navigation }) {
       </View>
 
       <View style={[styles.optionRow, { backgroundColor: colors.card, borderColor: colors.text }]}>
-        <Text style={[styles.optionText, { color: colors.text }]}>Notificações</Text>
+        <Text style={[styles.optionText, { color: colors.text }]}>{t('settings.notifications')}</Text>
         <Switch
           value={notificacoesAtivadas}
           onValueChange={() => setNotificacoesAtivadas(prev => !prev)}
@@ -136,12 +143,22 @@ export default function Configuracao({ navigation }) {
         />
       </View>
 
+      <TouchableOpacity 
+        style={[styles.optionRow, { backgroundColor: colors.card, borderColor: colors.text }]} 
+        onPress={handleChangeLanguage}
+      >
+        <Text style={[styles.optionText, { color: colors.text }]}>{t('settings.language')}</Text>
+        <Text style={[styles.optionText, { color: colors.text, fontWeight: 'bold' }]}>
+          {locale === 'pt' ? '🇧🇷 Português' : '🇪🇸 Español'}
+        </Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={[styles.logoutButton, { backgroundColor: colors.logoutButton }]} onPress={handleLogout}>
-        <Text style={[styles.logoutButtonText, { color: colors.text }]}>Sair</Text>
+        <Text style={[styles.logoutButtonText, { color: colors.text }]}>{t('settings.logout')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={[styles.deleteButton]} onPress={handleExcluirConta}>
-        <Text style={[styles.logoutButtonText]}>Excluir Conta</Text>
+        <Text style={[styles.logoutButtonText]}>{t('settings.deleteAccount')}</Text>
       </TouchableOpacity>
     </View>
   );

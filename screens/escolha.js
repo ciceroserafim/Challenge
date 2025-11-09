@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
+import { useI18n } from '../context/I18nContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MotiView, MotiText } from 'moti';
 
 export default function Escolha({ navigation }) {
   const { modoEscuro, setModoEscuro } = useTheme(); // pega direto do contexto
+  const { t } = useI18n();
   const [temaAtivo, setTemaAtivo] = useState(modoEscuro);
 
   useEffect(() => {
@@ -29,10 +31,10 @@ export default function Escolha({ navigation }) {
   };
 
   const cards = [
-    { label: '📍 Ir para Pátio', screen: 'Patio', color: '#4CAF50', desc: 'Gerencie o pátio e visualize as motos.' },
-    { label: '📝 Preencher Formulário', screen: 'Formulario', color: '#388E3C', desc: 'Adicione novas informações facilmente.' },
-    { label: '👥 Desenvolvedores', screen: 'Desenvolvedores', color: '#43A047', desc: 'Conheça quem criou o aplicativo.' },
-    { label: '⚙️ Configurações', screen: 'Configuracao', color: '#2E7D32', desc: 'Ajuste o tema e preferências do app.' },
+    { label: t('choice.patio'), screen: 'Patio', color: '#4CAF50', desc: t('choice.patioDesc') },
+    { label: t('choice.form'), screen: 'Formulario', color: '#388E3C', desc: t('choice.formDesc') },
+    { label: t('choice.developers'), screen: 'Desenvolvedores', color: '#43A047', desc: t('choice.developersDesc') },
+    { label: t('choice.settings'), screen: 'Configuracao', color: '#2E7D32', desc: t('choice.settingsDesc') },
   ];
 
   return (
@@ -61,7 +63,7 @@ export default function Escolha({ navigation }) {
             { color: temaAtivo ? '#00FF7F' : '#2E7D32' },
           ]}
         >
-          Escolha uma Opção
+          {t('choice.title')}
         </MotiText>
 
         <Text
@@ -70,7 +72,7 @@ export default function Escolha({ navigation }) {
             { color: temaAtivo ? '#7FFFD4' : '#2E7D32' },
           ]}
         >
-          Navegue pelas seções do aplicativo
+          {t('choice.subtitle')}
         </Text>
       </MotiView>
 

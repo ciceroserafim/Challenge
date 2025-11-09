@@ -1,0 +1,135 @@
+{
+  "welcome": {
+    "title": "Bienvenido a la App de Mottu",
+    "description": "Esta es una aplicación de demostración con funcionalidades como inicio de sesión, patio, formulario y configuración.",
+    "start": "Comenzar"
+  },
+  "login": {
+    "title": "¡Bienvenido!",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "login": "Iniciar sesión",
+    "forgotPassword": "¿Olvidaste la contraseña?",
+    "noAccount": "¿No tienes cuenta? Regístrate aquí",
+    "errors": {
+      "fillFields": "Complete todos los campos.",
+      "invalidUser": "Usuario inválido o no registrado.",
+      "incorrectPassword": "Contraseña incorrecta.",
+      "notificationPermission": "¡Permiso para notificaciones no concedido!"
+    }
+  },
+  "register": {
+    "title": "Registro de Usuario",
+    "name": "Nombre",
+    "cpf": "CPF",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "register": "Registrar",
+    "errors": {
+      "fillFields": "¡Complete todos los campos!",
+      "passwordsNoMatch": "¡Las contraseñas no coinciden!",
+      "invalidCpf": "CPF inválido. Debe contener 11 números.",
+      "registerError": "No fue posible registrar el usuario."
+    },
+    "success": "¡Usuario %{name} registrado con éxito!"
+  },
+  "forgotPassword": {
+    "title": "Recuperar Contraseña",
+    "email": "Ingrese su correo electrónico",
+    "send": "Enviar",
+    "errors": {
+      "fillEmail": "Por favor, complete el correo electrónico.",
+      "emailNotRegistered": "Correo electrónico no registrado.",
+      "recoveryError": "No fue posible recuperar la contraseña."
+    },
+    "recoveryTitle": "Recuperación de Contraseña",
+    "recoveryMessage": "Su contraseña registrada es: %{password}"
+  },
+  "choice": {
+    "title": "Elige una Opción",
+    "subtitle": "Navega por las secciones de la aplicación",
+    "patio": "📍 Ir al Patio",
+    "form": "📝 Completar Formulario",
+    "developers": "👥 Desarrolladores",
+    "settings": "⚙️ Configuración",
+    "patioDesc": "Gestiona el patio y visualiza las motos.",
+    "formDesc": "Agrega nueva información fácilmente.",
+    "developersDesc": "Conoce quién creó la aplicación.",
+    "settingsDesc": "Ajusta el tema y preferencias de la app."
+  },
+  "patio": {
+    "title": "Motos en el Patio",
+    "noMotos": "Aún no hay motos registradas.",
+    "plate": "Placa",
+    "responsible": "Responsable",
+    "location": "Ubicación",
+    "status": {
+      "available": "Disponible",
+      "reserved": "Reservada",
+      "maintenance": "Mantenimiento",
+      "structuralDamage": "Daños estructurales",
+      "unavailable": "No disponible",
+      "accident": "Siniestro",
+      "missingPart": "Falta de pieza"
+    }
+  },
+  "form": {
+    "responsibleName": "Nombre del Responsable",
+    "plate": "Placa de la Moto",
+    "model": "Modelo de la Moto",
+    "location": "Ubicación en el Patio",
+    "status": "Estado de la Moto",
+    "enterName": "Ingrese el nombre",
+    "enterPlate": "Ingrese la placa",
+    "enterModel": "Ingrese el modelo",
+    "locationPlaceholder": "Ej: Bloque A - Plaza 3",
+    "save": "Guardar",
+    "statusOptions": {
+      "available": "Disponible",
+      "reserved": "Reservada",
+      "maintenance": "Mantenimiento",
+      "structuralDamage": "Con daños estructurales",
+      "unavailable": "No disponible",
+      "accident": "Siniestro",
+      "missingPart": "Falta de pieza"
+    },
+    "errors": {
+      "fillFields": "Complete todos los campos antes de guardar.",
+      "saveError": "No fue posible guardar la moto."
+    },
+    "success": "¡Moto registrada con éxito!",
+    "notification": {
+      "title": "🏍️ ¡Nueva moto agregada!",
+      "body": "Modelo: %{model}\nPlaca: %{plate}\nResponsable: %{name}"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "darkMode": "Modo Oscuro",
+    "mottuMode": "Modo Mottu",
+    "notifications": "Notificaciones",
+    "language": "Idioma",
+    "logout": "Salir",
+    "deleteAccount": "Eliminar Cuenta",
+    "loadingUser": "Cargando usuario...",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "cpf": "CPF",
+    "confirmDelete": "Confirmación",
+    "confirmDeleteMessage": "¿Estás seguro de que deseas eliminar tu cuenta?",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "accountDeleted": "Cuenta eliminada",
+    "accountDeletedMessage": "Tu cuenta ha sido removida con éxito.",
+    "errors": {
+      "noUser": "No se encontró ningún usuario iniciado.",
+      "deleteError": "No fue posible eliminar la cuenta."
+    }
+  },
+  "developers": {
+    "title": "🏍️ Desarrolladores del Proyecto 💨",
+    "rm": "RM"
+  }
+}
+
